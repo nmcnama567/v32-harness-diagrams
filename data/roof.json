@@ -1,0 +1,289 @@
+{
+ "order": 20,
+ "key": "roof",
+ "name": "ROOF",
+ "shell": "HD34-18-14PE",
+ "arr": "insert 18-14 \u00b7 14\u00d7 size 16 \u00b7 E seal (blue)",
+ "tedoc": "TE 0425-013-1800 rev D",
+ "stepsrc": "c-hd34-18-14pe-b-3d.stp",
+ "cavities": {
+  "P": [
+   16,
+   0.0,
+   9.207
+  ],
+  "E": [
+   16,
+   -5.413,
+   7.447
+  ],
+  "N": [
+   16,
+   5.413,
+   7.447
+  ],
+  "D": [
+   16,
+   0.0,
+   3.721
+  ],
+  "F": [
+   16,
+   -8.755,
+   2.845
+  ],
+  "M": [
+   16,
+   8.755,
+   2.845
+  ],
+  "A": [
+   16,
+   -4.054,
+   0.0
+  ],
+  "C": [
+   16,
+   4.054,
+   0.0
+  ],
+  "G": [
+   16,
+   -8.755,
+   -2.845
+  ],
+  "L": [
+   16,
+   8.755,
+   -2.845
+  ],
+  "B": [
+   16,
+   0.0,
+   -3.721
+  ],
+  "H": [
+   16,
+   -5.413,
+   -7.447
+  ],
+  "K": [
+   16,
+   5.413,
+   -7.447
+  ],
+  "J": [
+   16,
+   0.0,
+   -9.207
+  ]
+ },
+ "ordmap": [
+  [
+   "1",
+   "A"
+  ],
+  [
+   "2",
+   "B"
+  ],
+  [
+   "3",
+   "C"
+  ],
+  [
+   "4",
+   "D"
+  ],
+  [
+   "5",
+   "E"
+  ],
+  [
+   "6",
+   "F"
+  ],
+  [
+   "7",
+   "G"
+  ],
+  [
+   "8",
+   "H"
+  ],
+  [
+   "9",
+   "J"
+  ],
+  [
+   "10",
+   "K"
+  ],
+  [
+   "11",
+   "L"
+  ],
+  [
+   "12",
+   "M"
+  ],
+  [
+   "13",
+   "N"
+  ],
+  [
+   "14",
+   "P"
+  ]
+ ],
+ "wires": [
+  [
+   "A",
+   "STARLINK_13V (FH4 5A)",
+   "18",
+   "PWR",
+   "power",
+   "J_RP",
+   1,
+   ""
+  ],
+  [
+   "C",
+   "LIDAR_13V (FH7 AUX 5A)",
+   "18",
+   "PWR",
+   "power",
+   "J_RP",
+   2,
+   ""
+  ],
+  [
+   "E",
+   "BCN_13V (FH5\u00b7K53 5A)",
+   "18",
+   "PWR",
+   "power",
+   "J_RP",
+   3,
+   ""
+  ],
+  [
+   "M",
+   "SPARE_13V (FH8 7.5A)",
+   "18",
+   "PWR",
+   "power",
+   "J_RP",
+   4,
+   ""
+  ],
+  [
+   "J",
+   "ES_RX (ALWAYS-ON)",
+   "18",
+   "SAFE",
+   "power",
+   "J_RP",
+   5,
+   "hot"
+  ],
+  [
+   "K",
+   "RX_STAT",
+   "20",
+   "SAFE",
+   "power",
+   "J_RP",
+   6,
+   ""
+  ],
+  [
+   "B",
+   "STARLINK_GND",
+   "18",
+   "GND",
+   "power",
+   "J_RP",
+   7,
+   ""
+  ],
+  [
+   "D",
+   "LIDAR_GND",
+   "18",
+   "GND",
+   "power",
+   "J_RP",
+   8,
+   ""
+  ],
+  [
+   "F",
+   "BCN_GND",
+   "18",
+   "GND",
+   "power",
+   "J_RP",
+   9,
+   ""
+  ],
+  [
+   "N",
+   "SPARE_GND",
+   "18",
+   "GND",
+   "power",
+   "J_RP",
+   10,
+   ""
+  ],
+  [
+   "L",
+   "RX_GND",
+   "18",
+   "GND",
+   "power",
+   "J_RP",
+   11,
+   ""
+  ],
+  [
+   "G",
+   "LIDAR_CAN_H",
+   "20 tw",
+   "CANH",
+   "signal",
+   "J_RS",
+   1,
+   "tw:a"
+  ],
+  [
+   "H",
+   "LIDAR_CAN_L",
+   "20 tw",
+   "CANL",
+   "signal",
+   "J_RS",
+   2,
+   "tw:b"
+  ]
+ ],
+ "spare_cavs": [
+  "P"
+ ],
+ "housings": {
+  "J_RP": {
+   "title": "J_RP \u00b7 Mini-Fit Jr 12",
+   "sub": "PWR board \u00b7 mate 39-01-2120",
+   "spare": "pin 12 spare",
+   "note": "pin 5 live with master switch OFF"
+  },
+  "J_RS": {
+   "title": "J_RS \u00b7 Micro-Fit 4",
+   "sub": "IFB \u00b7 mate 43025-0400",
+   "spare": "pin 4 spare",
+   "note": "pin 3 = SIG_GND/drain (CAN stub ref, no panel cavity)"
+  }
+ },
+ "hnote": ""
+}

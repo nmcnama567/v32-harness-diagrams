@@ -1,0 +1,4 @@
+# No Python packages required — the generator uses only the standard library (json, math, os).
+# Python >= 3.7 (insertion-ordered dicts are load-bearing for deterministic SVG output).
+# PNG export requires Google Chrome (headless screenshot, --force-device-scale-factor=2);
+# override the binary path with CHROME=/path/to/chrome if not at the default macOS location.
