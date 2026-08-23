@@ -140,7 +140,7 @@
   [
    "A",
    "STARLINK_13V (FH4 5A)",
-   "18",
+   "16",
    "PWR",
    "power",
    "J_RP",
@@ -150,7 +150,7 @@
   [
    "C",
    "LIDAR_13V (FH7 AUX 5A)",
-   "18",
+   "16",
    "PWR",
    "power",
    "J_RP",
@@ -160,7 +160,7 @@
   [
    "E",
    "BCN_13V (FH5\u00b7K53 5A)",
-   "18",
+   "16",
    "PWR",
    "power",
    "J_RP",
@@ -170,7 +170,7 @@
   [
    "M",
    "SPARE_13V (FH8 7.5A)",
-   "18",
+   "16",
    "PWR",
    "power",
    "J_RP",
@@ -200,7 +200,7 @@
   [
    "B",
    "STARLINK_GND",
-   "18",
+   "16",
    "GND",
    "power",
    "J_RP",
@@ -210,7 +210,7 @@
   [
    "D",
    "LIDAR_GND",
-   "18",
+   "16",
    "GND",
    "power",
    "J_RP",
@@ -220,7 +220,7 @@
   [
    "F",
    "BCN_GND",
-   "18",
+   "16",
    "GND",
    "power",
    "J_RP",
@@ -230,7 +230,7 @@
   [
    "N",
    "SPARE_GND",
-   "18",
+   "16",
    "GND",
    "power",
    "J_RP",
