@@ -6,3 +6,4 @@ steering-internal.svg 1622 643
 steering-pinout.svg 1300 983
 jetson-internal.svg 1622 1002
 jetson-pinout.svg 1300 1116
+panel-switch-internal.svg 1622 880

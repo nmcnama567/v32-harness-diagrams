@@ -98,4 +98,25 @@ cavity and is dropped (survives as the R26/R18 probe stub on the interface board
    key is fixed by the product — orient the printed cavity letters/numbers molded on the grommet at
    contact-loading time (they are molded on every HD34 rear grommet, ref 114-151014 §3.3.B).
 4. Diagram set: `{vehicle,roof,steering,jetson}-{internal,pinout}.png`, 2× SVG masters alongside
-   (`*.svg`, same basenames) — regenerate via scratchpad `gen2.py`.
+   (`*.svg`, same basenames) — regenerate via `run.sh` at the repo root.
+
+## PANEL — kit master switch + status LED → J50 (added 2026-08-22, no HD34 involved)
+
+Interior-only harness: panel devices on the enclosure front wall → J50 on the power board
+(Micro-Fit 6 housing 43025-0600, crimps 43030-0007, all conductors 20 AWG, one wire per contact,
+crimp-to-solder-lug / crimp-to-quick-connect). Diagram: `panel-switch-internal.png` (+ SVG master,
+generated with the rest of the set from `data/switch.json`). J50 was XH-6 single-row; now
+Micro-Fit 2×3 — pin NUMBERS 1:1 (rows 1-2-3 / 4-5-6, pin 1 opposite pin 4).
+
+| J50 pin | Circuit | Panel end | AWG | Notes |
+|---|---|---|---|---|
+| 1 | LED_A | LED + (Q8 quick-connect 2.8 mm) | 20 | fed from K50 coil node via R58 1k (~10 mA) — lights when kit armed |
+| 2 | SW_ARM | switch lug **1** (pole-1 COM) | 20 | arms K50 via Q50 emitter-follower |
+| 3 | ES_FEED | switch lug **1a** (pole-1 up-throw) | 20 | **ALWAYS HOT** ≈13 V via R92 470R whenever battery connected — does not pass through the master relay |
+| 4 | PWR_SW | switch lug **2** (pole-2 COM) | 20 | LM5176 enable; R61 470k pull-up → also weakly live with kit off |
+| 5 | GND | switch lug **2a** (pole-2 up-throw) | 20 | switch return |
+| 6 | GND | LED − | 20 | LED return |
+
+Switch = NKK WT22S (DPDT ON-NONE-ON): toggle **UP = ON** closes 1–1a + 2–2a; lugs 1b/2b unused.
+LED = APEM Q8P1CXXHG02E (green, 2 V bare LED — no series resistor in the harness). Both PNs
+pending approval per switch-sourcing.md.

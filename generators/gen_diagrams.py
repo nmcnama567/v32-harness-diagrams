@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
-# Crewline V3.2 receptacle diagram generator.
+# Crewline V3.2 harness diagram generator.
 # Per panel receptacle: internal Y-split pigtail diagram + mating-face pinout diagram.
-# Data: ../data/*.json (one file per receptacle + meta.json). Stdlib only.
+# Plus the interior panel-switch harness (data kind "panel"): switch/LED lugs -> J50.
+# Data: ../data/*.json (one file per receptacle or panel device + meta.json). Stdlib only.
 # Cavity positions: TE STEP models (c-hd34-*-3d.stp). Cavity IDs: TE 0425-013-1800 rev D /
 # 0425-014-2400 rev H (rear/grommet PIN-insert views). Wire tables: docs/internal-wiring-definition.md
 import json, math, os
@@ -16,12 +17,14 @@ DATE = META["date"]
 PROJECT = META["project"]
 WIRE_TABLE = f'{META["wire_table"]} ({META["wire_table_date"]})'
 
-RECEPTACLES = []
+RECEPTACLES, PANELS = [], []
 for fn in sorted(os.listdir(DATA)):
     if fn.endswith(".json") and fn != "meta.json":
         with open(os.path.join(DATA, fn)) as f:
-            RECEPTACLES.append(json.load(f))
+            d = json.load(f)
+        (PANELS if d.get("kind") == "panel" else RECEPTACLES).append(d)
 RECEPTACLES.sort(key=lambda rc: rc["order"])
+PANELS.sort(key=lambda rc: rc["order"])
 
 # ---------------------------------------------------------------- palette
 C = {
@@ -482,6 +485,181 @@ def gen_face(rc, angle_nudge=None):
     s.out(fn)
     return fn, W, H, warn
 
+# ---------------------------------------------------------------- panel switch
+# Panel-device drawing (data `kind: "panel"`, data/switch.json): switch/LED
+# rear-view lug reference, straight wire fan with per-wire circuit·AWG labels,
+# destination header box with wire-entry inset, always-hot warning box.
+# Folded in from the standalone gen_panel_switch.py; keeps that script's own
+# emitters (integer coordinates, per-element audit capture) so the SVG stays
+# byte-identical to the delivered reference, and its text/wire/box overlap
+# audit (the receptacle leader-collision audit has no equivalent here).
+def gen_switch(rc):
+    W, H = 1622, 880
+    E = []      # svg elements
+    TEXTS = []  # (s, x0, y0, x1, y1) for audit
+    WIRES = []  # ((x1,y1),(x2,y2)) straight segments for audit
+    BOXES = []  # rects for audit
+
+    def text(x, y, s, size=12, fill="#333", anchor="start", bold=False, mono=False,
+             spacing=None, audit=True):
+        fam = MONO if mono else FONT
+        w = "bold" if bold else "normal"
+        sp = f' letter-spacing="{spacing}"' if spacing else ""
+        E.append(f'<text x="{x}" y="{y}" font-family="{fam}" font-size="{size}" '
+                 f'fill="{fill}" text-anchor="{anchor}" font-weight="{w}"{sp}>{s}</text>')
+        if audit:
+            wid = len(s) * size * (0.62 if mono else 0.56)
+            x0 = x - wid if anchor == "end" else x - wid / 2 if anchor == "middle" else x
+            TEXTS.append((s, x0, y - size, x0 + wid, y + size * 0.25))
+
+    def rect(x, y, w, h, rx=0, stroke="#555", fill="#fff", sw=1.5, audit=True):
+        E.append(f'<rect x="{x}" y="{y}" width="{w}" height="{h}" rx="{rx}" '
+                 f'stroke="{stroke}" fill="{fill}" stroke-width="{sw}"/>')
+        if audit:
+            BOXES.append((x, y, x + w, y + h))
+
+    def line(x1, y1, x2, y2, stroke="#c9c9c9", sw=1, audit=False):
+        E.append(f'<line x1="{x1}" y1="{y1}" x2="{x2}" y2="{y2}" stroke="{stroke}" '
+                 f'stroke-width="{sw}" stroke-linecap="round"/>')
+        if audit:
+            WIRES.append(((x1, y1), (x2, y2)))
+
+    def circle(cx, cy, r, stroke="#1a1a1a", fill="#fff", sw=1.7):
+        E.append(f'<circle cx="{cx}" cy="{cy}" r="{r}" stroke="{stroke}" '
+                 f'fill="{fill}" stroke-width="{sw}"/>')
+
+    # header band
+    rect(0, 0, W, 78, stroke="none", fill=C["band"], sw=0, audit=False)
+    line(0, 78, W, 78, C["line"], 1)
+    text(28, 34, rc["title"], 21, C["ink"], bold=True, spacing="0.5")
+    text(28, 58, rc["sub"], 12.5, "#555")
+    text(W - 28, 34, PROJECT, 13, "#444", anchor="end", bold=True)
+    text(W - 28, 56, DATE, 12, "#666", anchor="end")
+
+    # switch rear view (reference)
+    sw_d = rc["switch"]
+    SXC = 185  # switch drawing center x
+    text(SXC, 108, sw_d["heading"], 12, "#444", anchor="middle", bold=True)
+    rect(SXC - 95, 140, 190, 190, rx=10, stroke="#9a9a9a", fill="#fbfbfa", sw=2.2)
+    # bushing/flat marker on top edge
+    E.append(f'<path d="M {SXC-24} 140 A 24 24 0 0 1 {SXC+24} 140" stroke="#c0c0c0" '
+             f'fill="#ffffff" stroke-width="1.4"/>')
+    text(SXC, 155, "flat", 9, "#999", anchor="middle", audit=False)
+    cols = dict(zip(sw_d["poles"], (SXC - 42, SXC + 42)))    # left, right
+    rows = dict(zip(sw_d["throws"], (185, 235, 285)))        # top, mid, bottom
+    used = {tuple(u) for u in sw_d["used_lugs"]}
+    for p, cx in cols.items():
+        for t, cy in rows.items():
+            u = (p, t) in used
+            circle(cx, cy, 15, C["ink"] if u else "#c0c0c0")
+            text(cx, cy + 4, f"{p}{t}", 10.5, C["ink"] if u else "#999",
+                 anchor="middle", bold=True, mono=True, audit=False)
+    text(SXC, 352, sw_d["note1"], 11, "#444", anchor="middle", bold=True)
+    text(SXC, 369, sw_d["note2"], 10, "#777", anchor="middle")
+
+    # LED reference drawing
+    led = rc["led"]
+    text(SXC, 412, led["heading"], 12, "#444", anchor="middle", bold=True)
+    circle(SXC, 452, 24, "#9a9a9a", "#fbfbfa", 2.2)
+    circle(SXC, 452, 13, "#2e7d32", "#e8f3e9", 1.7)
+    text(SXC - 48, 456, "−", 13, C["ink"], anchor="middle", bold=True, mono=True,
+         audit=False)
+    text(SXC + 48, 456, "+", 13, C["ink"], anchor="middle", bold=True, mono=True,
+         audit=False)
+    line(SXC - 40, 452, SXC - 24, 452, C["ink"], 1.7)
+    line(SXC + 24, 452, SXC + 40, 452, C["ink"], 1.7)
+    text(SXC, 496, led["note"], 10, "#777", anchor="middle")
+
+    # legend (labels from data, colors from the shared palette)
+    text(88, 540, "LEGEND", 12.5, C["ink"], bold=True, spacing="1")
+    for i, (cl, lab) in enumerate(rc["legend"]):
+        y = 562 + i * 23
+        line(88, y - 4, 120, y - 4, C[cl], 3)
+        text(130, y, lab, 11.5, "#333")
+
+    # wires: source-terminal boxes, straight fan, per-wire labels
+    SRC_X, DST_X = 420, 1330
+    ROWS = [190 + 50 * i for i in range(len(rc["wires"]))]
+    for (src, circ, awg, cl, pin), y in zip(rc["wires"], ROWS):
+        col = C[cl]
+        rect(SRC_X, y - 11, 62, 22, rx=4, stroke="#888", sw=1.2)
+        text(SRC_X + 31, y + 4, src, 11.5, C["ink"], anchor="middle", bold=True,
+             mono=True, audit=False)
+        E.append(f'<path d="M {SRC_X+62} {y} L {DST_X} {y}" stroke="{col}" '
+                 f'stroke-width="2.0" fill="none" stroke-linecap="round"/>')
+        WIRES.append(((SRC_X + 62, y), (DST_X, y)))
+        text(700, y - 7, f'{circ} · {awg} AWG', 11.5, "#333")
+
+    # destination header box
+    hb = rc["housing"]
+    rect(DST_X, 140, 262, 340, rx=8, stroke="#555", fill="#fafaf8", sw=1.8)
+    text(DST_X + 12, 162, hb["title"], 12.5, C["ink"], bold=True)
+    text(DST_X + 12, 180, hb["sub"], 10, "#666")
+    for (src, circ, awg, cl, pin), y in zip(rc["wires"], ROWS):
+        line(DST_X - 2, y, DST_X + 7, y, "#555", 2)
+        text(DST_X + 14, y + 4, str(pin), 11, "#222", bold=True, mono=True,
+             audit=False)
+    text(DST_X + 12, 466, hb["note"], 9.5, "#8a8a8a")
+
+    # wire-entry inset inside the box, right of the pin column
+    ev = hb["entry"]
+    ix, iy, cell = DST_X + 78, 208, 42
+    text(ix + ev["cols"] * cell / 2, iy - 12, ev["heading"], 10, "#666",
+         anchor="middle", bold=True)
+    for r in range(ev["rows"]):
+        for c in range(ev["cols"]):
+            n = r * ev["cols"] + c + 1
+            rect(ix + c * cell, iy + r * cell, cell, cell, rx=3, stroke="#999",
+                 sw=1.1, audit=False)
+            text(ix + c * cell + cell / 2, iy + r * cell + cell / 2 + 4, str(n),
+                 11, "#222", anchor="middle", bold=True, mono=True, audit=False)
+    for k, nt in enumerate(ev["notes"]):
+        text(ix + ev["cols"] * cell / 2, iy + ev["rows"] * cell + 18 + 15 * k, nt,
+             9.5, "#666", anchor="middle")
+
+    # warning box
+    wb = rc["warning"]
+    wx, wy, ww, wh = 640, 500, 648, 92
+    rect(wx, wy, ww, wh, rx=8, stroke=C["PWR"], fill="#fdf3f2", sw=2)
+    text(wx + 16, wy + 26, wb["title"], 13.5, "#7a1414", bold=True, spacing="0.5")
+    for k, ln in enumerate(wb["lines"]):
+        text(wx + 16, wy + 48 + 18 * k, ln, 11, "#7a1414")
+
+    # footer
+    line(36, H - 76, W - 36, H - 76, C["line"], 1)
+    for k, ln in enumerate(rc["footer"]):
+        text(36, H - 52 + 20 * k, ln, 10.5, "#666")
+
+    # audit: text × wire, text × text, text × box-edge
+    bad = []
+    for s, x0, y0, x1, y1 in TEXTS:
+        for (a, b) in WIRES:
+            (wx1, wy1), (wx2, wy2) = (a, b)
+            if abs(wy1 - wy2) < 0.5:  # horizontal
+                if y0 < wy1 < y1 and min(wx1, wx2) < x1 and max(wx1, wx2) > x0:
+                    bad.append(("text-wire", s[:40], round(wy1)))
+    for i in range(len(TEXTS)):
+        for j in range(i + 1, len(TEXTS)):
+            s1, a0, b0, a1, b1 = TEXTS[i]
+            s2, c0, d0, c1, d1 = TEXTS[j]
+            if a0 < c1 - 2 and c0 < a1 - 2 and b0 < d1 - 2 and d0 < b1 - 2:
+                bad.append(("text-text", s1[:25], s2[:25]))
+    for s, x0, y0, x1, y1 in TEXTS:
+        for (bx0, by0, bx1, by1) in BOXES:
+            # flag text crossing a box EDGE (fully inside or outside is fine)
+            inside = bx0 < x0 and x1 < bx1 and by0 < y0 and y1 < by1
+            outside = x1 < bx0 or x0 > bx1 or y1 < by0 or y0 > by1
+            if not inside and not outside:
+                bad.append(("text-boxedge", s[:40], (bx0, by0)))
+
+    svg = (f'<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H}" '
+           f'viewBox="0 0 {W} {H}"><rect x="0" y="0" width="{W}" height="{H}" '
+           f'fill="{C["paper"]}"/>' + "".join(E) + "</svg>")
+    fn = f'{OUT}/{rc["key"]}-internal.svg'
+    with open(fn, "w") as f:
+        f.write(svg)
+    return fn, W, H, [(rc["key"],) + tuple(b) for b in bad]
+
 if __name__ == "__main__":
     os.makedirs(OUT, exist_ok=True)
     manifest, warns = [], []
@@ -492,6 +670,10 @@ if __name__ == "__main__":
         manifest.append((f1[0], f1[1], f1[2]))
         manifest.append((f2[0], f2[1], f2[2]))
         warns += f2[3]
+    for rc in PANELS:
+        f3 = gen_switch(rc)
+        manifest.append((f3[0], f3[1], f3[2]))
+        warns += f3[3]
     with open(f'{OUT}/manifest.txt', 'w') as f:
         for fn, w, h in manifest:
             f.write(f'{os.path.basename(fn)} {w} {h}\n')
