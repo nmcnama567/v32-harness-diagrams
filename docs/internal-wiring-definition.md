@@ -51,19 +51,19 @@ J_VP2 · 4 = spare. Power-board terminations: J_VP1 → input stage (F1/K-gate, 
 
 | Cavity | Circuit | AWG | Y-leg | Board header · pin |
 |---|---|---|---|---|
-| 1 | STARLINK_13V (FH4, 5 A) | 18 | power | PWR J_RP · 1 |
-| 2 | STARLINK_GND | 18 | power | PWR J_RP · 7 |
-| 3 | LIDAR_13V (FH7 AUX, 5 A) | 18 | power | PWR J_RP · 2 |
-| 4 | LIDAR_GND | 18 | power | PWR J_RP · 8 |
-| 5 | BCN_13V (FH5 via K53, 5 A) | 18 | power | PWR J_RP · 3 |
-| 6 | BCN_GND | 18 | power | PWR J_RP · 9 |
+| 1 | STARLINK_13V (FH4, 5 A) | 16 | power | PWR J_RP · 1 |
+| 2 | STARLINK_GND | 16 | power | PWR J_RP · 7 |
+| 3 | LIDAR_13V (FH7 AUX, 5 A) | 16 | power | PWR J_RP · 2 |
+| 4 | LIDAR_GND | 16 | power | PWR J_RP · 8 |
+| 5 | BCN_13V (FH5 via K53, 5 A) | 16 | power | PWR J_RP · 3 |
+| 6 | BCN_GND | 16 | power | PWR J_RP · 9 |
 | 7 | LIDAR_CAN_H | 20 tw | signal | IFB J_RS · 1 |
 | 8 | LIDAR_CAN_L | 20 tw | signal | IFB J_RS · 2 |
 | 9 | ES_RX (RX pwr, **always-on**) | 18 | power | PWR J_RP · 5 |
 | 10 | RX_STAT | 20 | power | PWR J_RP · 6 |
 | 11 | RX_GND | 18 | power | PWR J_RP · 11 |
-| 12 | SPARE_13V (FH8, 7.5 A) | 18 | power | PWR J_RP · 4 |
-| 13 | SPARE_GND | 18 | power | PWR J_RP · 10 |
+| 12 | SPARE_13V (FH8, 7.5 A) | 16 | power | PWR J_RP · 4 |
+| 13 | SPARE_GND | 16 | power | PWR J_RP · 10 |
 | 14 | spare (plugged) | — | — | J_RP · 12 spare |
 
 J_RS · 3 = SIG_GND/drain (bus GND reference for the CAN stub), · 4 spare. J_RP terminations: pins 1–4 = FH4/FH7/FH5(K53)/FH8 branch outputs; pin 5 = /ES_RX (safety chain, upstream of master switch — was J51); pin 6 = RX_STAT (R86/Q58 cell — was J53).
@@ -113,7 +113,7 @@ FH3 "DIO 2 A" budget — two loads: the interface-board +13V_SIG rail via J_BRG 
 
 ### Header roster
 
-**Power board (6):** J_VP1 Mega-Fit 4 (battery), J_VP2 Micro-Fit 4 (e-stop loop + T15), J_RP Mini-Fit Jr 12 (roof branches + RX trio), J_SP Mega-Fit 2 (steering), J_JP Mini-Fit Jr 4 (Jetson pwr + DIO pwr, 4/4), J_BRG-P Micro-Fit 20. Plus J50 panel harness (XH-6 today; migrate to Micro-Fit 6 recommended) and J2 XT60 bench out.
+**Power board (6):** J_VP1 Mega-Fit 4 (battery), J_VP2 Micro-Fit 4 (e-stop loop + T15), J_RP Mini-Fit Jr 12 (roof branches + RX trio) — branch pairs 16 AWG on 45750-3112 HCS terminals, RX trio on 39-00-0039, J_SP Mega-Fit 2 (steering), J_JP Mini-Fit Jr 4 (Jetson pwr + DIO pwr, 4/4), J_BRG-P Micro-Fit 20. Plus J50 panel harness (XH-6 today; migrate to Micro-Fit 6 recommended) and J2 XT60 bench out.
 **Interface board (5):** J_VS Micro-Fit 16 (vehicle signals), J_RS Micro-Fit 4 (LiDAR CAN), J_SS Mini-Fit Jr 4 w/ HCS (steering CAN), J_JS Micro-Fit 16 (Jetson signals), J_BRG-I Micro-Fit 20.
 
 Same-size collision audit: J_RS (Micro-Fit 4, IFB) vs J_VP2 (Micro-Fit 4, PWR) — cross-board only; worst case is loop-open = nuisance stop, no damage. J_SS vs J_JP (Mini-Fit 4) — cross-board only; label + leg dress. J_VS vs J_JS (both Micro-Fit 16, same board) — the one real same-board pair: all-signal, no damage class, machine simply won't run; mitigate with leg length dress + housing labels (same posture as the panel-side boot-color rule). J_BRG's 20-ckt width is deliberately unique so the bridge can never mate a Y-leg.
@@ -167,7 +167,7 @@ Tooling: all three families crimp with standard open-barrel tooling every OEM ow
 |---|---|---|---|
 | Battery (J_VP1) | 25 A fuse ceiling / ~20 A real, 2 pins/pole | Mega-Fit 23 A | 12.5 A/pin = 54 % — clean even at Texas ambient |
 | Steering (J_SP) | ~9 A working, ~16 A transient | Mega-Fit 23 A | 39 % cont / 70 % transient — fine |
-| Roof branches (J_RP) | ≤5 A each, 12-ckt loaded | Mini-Fit Jr 9 A (≈7 A fully-loaded derate) | ≤71 % — fine |
+| Roof branches (J_RP) | ≤5 A each, 12-ckt loaded | Mini-Fit Jr, branch pins on HCS terminals (13 A) | ≤5 A on 13 A = ≤38 %; RX trio ≪1 A — fine |
 | Jetson (J_JP) | 7.5 A fuse / ≈4.6 A real | Mini-Fit Jr 9 A | 51 % real; HCS drop-in if bench runs hot |
 | Signals + J_BRG | ≤2 A (13 V feed over 2 pins → 1 A/pin) | Micro-Fit 5 A | ≥60 % headroom everywhere |
 
@@ -206,10 +206,11 @@ Routing bullets rewritten to the Y-split scheme + header roster + J_BRG pin summ
 
 Changes vs the original line list:
 1. **VEHICLE:** battery is now **2+2** — four 12 AWG GXL conductors (BAT+ ×2 on s12-1/-3, BAT− ×2 on s12-2/-4), external harness same. **E-stop loop moves to s16-1/-2 at 18 AWG** (was s12 @ 14 AWG; board-side terminals 43030-0038). **Brake is one twisted pair, BRK_JOY/BRK_ECU on s16-9/-10** — single cut conductor, no returns (the machine references the lever line to console ground at the EBOX stud). Add **T15 key-sense on s16-13, 20 AWG** (external: splice-point per machine T15 tap, OEM to quote). 14 of 17 s16 used; s16-15…17 plugged.
-2. **ROOF:** e-stop RX is **three wires** — ES_RX pwr (18 AWG), RX_STAT (20 AWG), RX_GND (18 AWG) on cavities 9/10/11. 13 of 14 used; cavity 14 plugged.
+2. **ROOF:** e-stop RX is **three wires** — ES_RX pwr (18 AWG), RX_STAT (20 AWG), RX_GND (18 AWG) on cavities 9/10/11. The four branch pairs (Starlink/LiDAR/beacon/spare) are 16 AWG GXL internal and external (5 m voltage-drop retune, 2026-08-22; s16 barrel ceiling); board-side terminals 45750-3112 HCS. 13 of 14 used; cavity 14 plugged.
 3. **STEERING:** unchanged externally (16 AWG CAN confirmed); internal CAN pair lands in Mini-Fit HCS 16 AWG terminals (45750-1112) — OEM to confirm applicator.
 4. **JETSON:** DIO set finalized — all 18 s20 positions used (DIO supply pair on the power leg + 16 signal-leg wires per the map above); nothing plugged. SEAT_EMU_SENSE has no cavity and is dropped (diagnostics-class).
 5. **Molex housing/terminal line items** per the harness-side table (43025/43030 incl. 43030-0038 18 AWG, 39-01/39-00/45750, 171692/76823). Board headers are our PCBA scope, not the OEM's.
 6. **J_BRG assembly:** 1× per enclosure, 20-ckt Micro-Fit double-ended per section (c).
+7. **Finished external harness lengths (locked):** VEHICLE 5.0 m · ROOF 5.0 m · STEERING 1.5 m · JETSON 0.7 m ±0.1 (plug face → A4AGX connector faces, incl. 150–200 mm service loop, fan-out breakout in final 150 mm, bend radius ≥60 mm — derived from enclosure CAD). ≥5 m lines quoted with a per-meter adder for install variance; battery pair cut at 5.0 m exactly, no service coil.
 
-**Approvals queue for Niall (per no-unapproved-substitutions — all connector PNs above are proposals, nothing ordered):** the Molex header/housing/terminal line items per the pick list (`/tmp/claude-501/board-connector-picks.md`), including 43030-0038 (18 AWG Micro-Fit terminal, e-stop loop), 171692-0104/-0102 (Mega-Fit receptacles) and 45750-3112 (16 AWG HCS); 43045-2012/43025-2000/43025-0400/39-01-2040 stock reads at order time; J50 XH→Micro-Fit migration.
+**Approvals queue for Niall (per no-unapproved-substitutions — all connector PNs above are proposals, nothing ordered):** the Molex header/housing/terminal line items per the pick list (`/tmp/claude-501/board-connector-picks.md`), including 43030-0038 (18 AWG Micro-Fit terminal, e-stop loop), 171692-0104/-0102 (Mega-Fit receptacles) and 45750-3112 (16 AWG HCS — quantity now 10/enclosure: 8× J_RP + 2× J_SS); 43045-2012/43025-2000/43025-0400/39-01-2040 stock reads at order time; J50 XH→Micro-Fit migration.
