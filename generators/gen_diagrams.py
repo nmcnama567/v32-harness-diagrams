@@ -235,8 +235,9 @@ def gen_internal(rc):
             s.path(pb, C[wb[3]], 2.0)
             s.text(x0+seg, (y1+y2)/2+3.5, "tw", 9, anchor="middle", fill=C["muted"])
 
-    s.text(X_DIV1+6, lanes[powers[0][0]] - 26, "POWER LEG", 12.5, weight="bold", fill="#7a1414", spacing="1")
-    s.text(X_DIV1+6, lanes[signals[0][0]] - 26, "SIGNAL LEG", 12.5, weight="bold", fill="#3a3a6a", spacing="1")
+    if powers and signals:
+        s.text(X_DIV1+6, lanes[powers[0][0]] - 26, "POWER LEG", 12.5, weight="bold", fill="#7a1414", spacing="1")
+        s.text(X_DIV1+6, lanes[signals[0][0]] - 26, "SIGNAL LEG", 12.5, weight="bold", fill="#3a3a6a", spacing="1")
 
     for h in p_h + s_h:
         meta = rc["housings"][h]
