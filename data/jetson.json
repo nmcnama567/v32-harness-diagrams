@@ -3,7 +3,7 @@
  "key": "jetson",
  "name": "JETSON",
  "shell": "HD34-18-20PN",
- "arr": "insert 18-20 \u00b7 2\u00d7 size 16 + 18\u00d7 size 20 \u00b7 N seal (green)",
+ "arr": "insert 18-20 · 2× size 16 + 18× size 20 · N seal (green)",
  "tedoc": "TE 0425-013-1800 rev D",
  "stepsrc": "c-hd34-18-20pn-f1-3d.stp",
  "cavities": {
@@ -293,7 +293,7 @@
   ],
   [
    "11",
-   "GPIO_SPARE",
+   "DIO_OUT_BRK_VALUE (brake value)",
    "20",
    "SIG",
    "signal",
@@ -383,7 +383,7 @@
   ],
   [
    "15",
-   "IGN_SENSE (DIO in)",
+   "SEAT_EMU_SENSE (DIO in)",
    "20",
    "SIG",
    "signal",
@@ -395,15 +395,17 @@
  "spare_cavs": [],
  "housings": {
   "J_JP": {
-   "title": "J_JP \u00b7 Mini-Fit Jr 4",
-   "sub": "PWR board \u00b7 mate 39-01-2040",
+   "title": "J_JP · Mini-Fit Jr 4",
+   "sub": "PWR board · mate 39-01-2040",
    "spare": "",
-   "note": "4/4 \u2014 pins 2/4 = isolated DIO bank supply"
+   "note": "4/4 — pins 2/4 = isolated DIO bank supply",
+   "note2": "cut length ~ 230 mm (straight + 2/3 interior height)"
   },
   "J_JS": {
-   "title": "J_JS \u00b7 Micro-Fit 16",
-   "sub": "IFB \u00b7 mate 43025-1600",
-   "spare": "16/16 \u2014 no spares"
+   "title": "J_JS · Micro-Fit 16",
+   "sub": "IFB · mate 43025-1600",
+   "spare": "16/16 — no spares",
+   "note2": "cut length ~ 120 mm (straight + 2/3 interior height)"
   }
  },
  "hnote": ""

@@ -1,9 +1,9 @@
-vehicle-internal.svg 1622 1108
+vehicle-internal.svg 1622 1134
 vehicle-pinout.svg 1300 1162
-roof-internal.svg 1622 842
+roof-internal.svg 1622 868
 roof-pinout.svg 1300 1052
-steering-internal.svg 1622 643
+steering-internal.svg 1622 644
 steering-pinout.svg 1300 983
-jetson-internal.svg 1622 1002
+jetson-internal.svg 1622 1028
 jetson-pinout.svg 1300 1116
 panel-switch-internal.svg 1622 880

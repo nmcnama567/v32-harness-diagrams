@@ -3,7 +3,7 @@
  "key": "steering",
  "name": "STEERING",
  "shell": "HD34-18-8PE",
- "arr": "insert 18-8 \u00b7 8\u00d7 size 12 \u00b7 E seal (blue)",
+ "arr": "insert 18-8 · 8× size 12 · E seal (blue)",
  "tedoc": "TE 0425-013-1800 rev D",
  "stepsrc": "c-hd34-18-8pe-b-3d.stp",
  "cavities": {
@@ -85,7 +85,7 @@
  "wires": [
   [
    "A",
-   "STR_13V (FH6\u00b7K51 15A)",
+   "STR_13V (FH6·K51 15A)",
    "12",
    "PWR",
    "power",
@@ -132,15 +132,17 @@
  ],
  "housings": {
   "J_SP": {
-   "title": "J_SP \u00b7 Mega-Fit 2 (2\u00d71)",
-   "sub": "PWR board \u00b7 mate 171692-0102",
-   "spare": ""
+   "title": "J_SP · Mega-Fit 2 (2×1)",
+   "sub": "PWR board · mate 171692-0102",
+   "spare": "",
+   "note2": "cut length ~ 140 mm (straight + 2/3 interior height)"
   },
   "J_SS": {
-   "title": "J_SS \u00b7 Mini-Fit Jr 4",
-   "sub": "IFB \u00b7 mate 39-01-2040 \u00b7 HCS 45750-3112",
+   "title": "J_SS · Mini-Fit Jr 4",
+   "sub": "IFB · mate 39-01-2040 · HCS 45750-3112",
    "spare": "pin 4 spare",
-   "note": "pin 3 = SIG_GND (no panel cavity)"
+   "note": "pin 3 = SIG_GND (no panel cavity)",
+   "note2": "cut length ~ 140 mm (straight + 2/3 interior height)"
   }
  },
  "hnote": ""

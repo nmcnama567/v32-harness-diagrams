@@ -3,7 +3,7 @@
  "key": "roof",
  "name": "ROOF",
  "shell": "HD34-18-14PE",
- "arr": "insert 18-14 \u00b7 14\u00d7 size 16 \u00b7 E seal (blue)",
+ "arr": "insert 18-14 · 14× size 16 · E seal (blue)",
  "tedoc": "TE 0425-013-1800 rev D",
  "stepsrc": "c-hd34-18-14pe-b-3d.stp",
  "cavities": {
@@ -159,7 +159,7 @@
   ],
   [
    "E",
-   "BCN_13V (FH5\u00b7K53 5A)",
+   "BCN_13V (FH5·K53 5A)",
    "16",
    "PWR",
    "power",
@@ -273,16 +273,18 @@
  ],
  "housings": {
   "J_RP": {
-   "title": "J_RP \u00b7 Mini-Fit Jr 12",
-   "sub": "PWR board \u00b7 mate 39-01-2120",
+   "title": "J_RP · Mini-Fit Jr 12",
+   "sub": "PWR board · mate 39-01-2120",
    "spare": "pin 12 spare",
-   "note": "pin 5 live with master switch OFF"
+   "note": "pin 5 live with master switch OFF",
+   "note2": "cut length ~ 130 mm (straight + 2/3 interior height)"
   },
   "J_RS": {
-   "title": "J_RS \u00b7 Micro-Fit 4",
-   "sub": "IFB \u00b7 mate 43025-0400",
+   "title": "J_RS · Micro-Fit 4",
+   "sub": "IFB · mate 43025-0400",
    "spare": "pin 4 spare",
-   "note": "pin 3 = SIG_GND/drain (CAN stub ref, no panel cavity)"
+   "note": "pin 3 = SIG_GND/drain (CAN stub ref, no panel cavity)",
+   "note2": "cut length ~ 190 mm (straight + 2/3 interior height)"
   }
  },
  "hnote": ""

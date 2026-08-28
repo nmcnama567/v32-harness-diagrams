@@ -3,8 +3,8 @@
  "kind": "panel",
  "key": "panel-switch",
  "name": "PANEL",
- "title": "PANEL \u2014 kit master switch \u00b7 J50",
- "sub": "NKK WT22S DPDT ON-NONE-ON (toggle UP = ON) + APEM Q8 2 V status LED \u00b7 J50 housing 43025-0600 \u00b7 crimps 43030-0007 \u00b7 20 AWG throughout",
+ "title": "PANEL — kit master switch · J50",
+ "sub": "NKK WT22S DPDT ON-NONE-ON (toggle UP = ON) + APEM Q8 2 V status LED · J50 housing 43025-0600 · crimps 43030-0007 · 20 AWG throughout",
  "switch": {
   "heading": "SWITCH REAR VIEW (solder lugs)",
   "poles": [
@@ -34,12 +34,12 @@
     ""
    ]
   ],
-  "note1": "UP = ON closes 1\u20131a + 2\u20132a",
-  "note2": "1b / 2b unused (spare throw) \u00b7 bushing flat UP"
+  "note1": "UP = ON closes 1–1a + 2–2a",
+  "note2": "1b / 2b unused (spare throw) · bushing flat UP"
  },
  "led": {
-  "heading": "STATUS LED \u2014 APEM Q8 \u00b7 green \u00b7 2 V",
-  "note": "board resistor R58 1k sets ~10 mA \u2014 no series R in harness"
+  "heading": "STATUS LED — APEM Q8 · green · 2 V",
+  "note": "board resistor R58 1k sets ~10 mA — no series R in harness"
  },
  "legend": [
   [
@@ -72,57 +72,57 @@
   ],
   [
    "SW 1a",
-   "ES_FEED \u2014 ALWAYS HOT (13 V via R92 470R)",
+   "ES_FEED — ALWAYS HOT (13 V via R92 470R)",
    "20",
    "PWR",
    3
   ],
   [
    "SW 2",
-   "PWR_SW (LM5176 enable \u00b7 R61 470k pull-up)",
+   "PWR_SW (LM5176 enable · R61 470k pull-up)",
    "20",
    "SIG",
    4
   ],
   [
    "SW 2a",
-   "GND \u2014 switch return",
+   "GND — switch return",
    "20",
    "GND",
    5
   ],
   [
-   "LED \u2212",
-   "GND \u2014 LED return",
+   "LED −",
+   "GND — LED return",
    "20",
    "GND",
    6
   ]
  ],
  "housing": {
-  "title": "J50 \u00b7 Micro-Fit 6",
-  "sub": "43025-0600 \u2192 PWR board 43045-0612",
-  "note": "6/6 loaded \u2014 no spares",
+  "title": "J50 · Micro-Fit 6",
+  "sub": "43025-0600 → PWR board 43045-0612",
+  "note": "6/6 loaded · cut ~ 250 mm",
   "entry": {
-   "heading": "wire-entry view \u2014 2\u00d73",
+   "heading": "wire-entry view — 2×3",
    "rows": 2,
    "cols": 3,
    "notes": [
     "pin 1 opposite pin 4",
-    "polarized \u2014 one-way fit",
+    "polarized — one-way fit",
     "numbers unchanged from XH-6"
    ]
   }
  },
  "warning": {
-  "title": "\u26a0 LIVE WITH KIT SWITCHED OFF",
+  "title": "⚠ LIVE WITH KIT SWITCHED OFF",
   "lines": [
-   "Pin 3 ES_FEED \u224813 V whenever the battery is connected (VCAP_IN \u2192 F50 \u2192 D50 \u2192 /ES_RX \u2192 R92 470R \u2014",
-   "does NOT pass through the master relay). Pin 4 PWR_SW \u224813 V via R61 470k (weak). Treat both as live."
+   "Pin 3 ES_FEED ≈13 V whenever the battery is connected (VCAP_IN → F50 → D50 → /ES_RX → R92 470R —",
+   "does NOT pass through the master relay). Pin 4 PWR_SW ≈13 V via R61 470k (weak). Treat both as live."
   ]
  },
  "footer": [
-  "Toggle UP: pole 1 jumpers pin 3 \u2192 pin 2 (ES_FEED \u2192 SW_ARM arms K50 via Q50 follower) \u00b7 pole 2 jumpers pin 4 \u2192 pin 5 (PWR_SW \u2192 GND enables the LM5176) \u2014 matches sheet ghosts S50/S52",
-  "One wire per contact, crimp-to-crimp, no splices \u00b7 J50 was XH-6 single-row \u2014 now Micro-Fit 2\u00d73, pin numbers 1:1 \u00b7 schematic rev c md5 26db7fab \u00b7 PNs per switch-sourcing.md (pending approval)"
+  "Toggle UP: pole 1 jumpers pin 3 → pin 2 (ES_FEED → SW_ARM arms K50 via Q50 follower) · pole 2 jumpers pin 4 → pin 5 (PWR_SW → GND enables the LM5176) — matches sheet ghosts S50/S52",
+  "One wire per contact, crimp-to-crimp, no splices · J50 was XH-6 single-row — now Micro-Fit 2×3, pin numbers 1:1 · schematic rev c md5 26db7fab · PNs per switch-sourcing.md (pending approval)"
  ]
 }

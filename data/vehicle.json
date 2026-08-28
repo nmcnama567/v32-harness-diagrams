@@ -3,7 +3,7 @@
  "key": "vehicle",
  "name": "VEHICLE",
  "shell": "HD34-24-21PE",
- "arr": "insert 24-21 \u00b7 4\u00d7 size 12 + 17\u00d7 size 16 \u00b7 E seal (blue)",
+ "arr": "insert 24-21 · 4× size 12 + 17× size 16 · E seal (blue)",
  "tedoc": "TE 0425-014-2400 rev H",
  "stepsrc": "c-hd34-24-21pe-b-3d.stp",
  "cavities": {
@@ -388,21 +388,23 @@
  ],
  "housings": {
   "J_VP1": {
-   "title": "J_VP1 \u00b7 Mega-Fit 4 (2\u00d72)",
-   "sub": "PWR board \u00b7 mate 171692-0104",
-   "spare": ""
+   "title": "J_VP1 · Mega-Fit 4 (2×2)",
+   "sub": "PWR board · mate 171692-0104",
+   "spare": "",
+   "note2": "cut length ~ 120 mm (straight + 2/3 interior height)"
   },
   "J_VP2": {
-   "title": "J_VP2 \u00b7 Micro-Fit 4",
-   "sub": "PWR board \u00b7 mate 43025-0400",
+   "title": "J_VP2 · Micro-Fit 4",
+   "sub": "PWR board · mate 43025-0400",
    "spare": "pin 4 spare",
    "note": "loop pins live via safety chain",
-   "note2": "loop terminals 43030-0038 (18 AWG)"
+   "note2": "cut length ~ 130 mm (straight + 2/3 interior height)"
   },
   "J_VS": {
-   "title": "J_VS \u00b7 Micro-Fit 16",
-   "sub": "IFB \u00b7 mate 43025-1600",
-   "spare": "pins 12-16 spare"
+   "title": "J_VS · Micro-Fit 16",
+   "sub": "IFB · mate 43025-1600",
+   "spare": "pins 12-16 spare",
+   "note2": "cut length ~ 240 mm (straight + 2/3 interior height)"
   }
  },
  "hnote": ""
