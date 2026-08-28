@@ -148,9 +148,11 @@ def gen_internal(rc):
         return y
     y = place(p_h, powers, y)
     y_pow_end = y - LANE
-    y += footer_h(p_h[-1]) + HDR + 6      # leg gap accounts for block footer+header
+    if p_h:                               # leg gap accounts for block footer+header;
+        y += footer_h(p_h[-1]) + (HDR + 6 if s_h else -LANE + 8)
     y = place(s_h, signals, y)
-    y += footer_h(s_h[-1]) - LANE + 8
+    if s_h:
+        y += footer_h(s_h[-1]) - LANE + 8
     y_sp0 = y + 26
     n_sp = len(rc["spare_cavs"])
     content_bottom = y_sp0 + n_sp*24 + 10
@@ -199,7 +201,7 @@ def gen_internal(rc):
     # clamp tick + caption in guaranteed pocket above trunk_top between X_TR1..X_FORK
     s.line(X_FORK-4, trunk_top-6, X_FORK-4, trunk_bot+6, "#444", 2.2)
     s.line(X_FORK+1, trunk_top-6, X_FORK+1, trunk_bot+6, "#444", 2.2)
-    s.text((X_TR1+X_FORK)/2, trunk_top-16, "Y-fork", 11.5, anchor="middle", weight="bold", fill="#444")
+    s.text((X_TR1+X_FORK)/2, trunk_top-16, "Y-fork" if (p_h and s_h) else "loom clamp", 11.5, anchor="middle", weight="bold", fill="#444")
 
     twmap = {}
     for w in allw:
