@@ -399,13 +399,13 @@
    "sub": "PWR board · mate 39-01-2040",
    "spare": "",
    "note": "4/4 — pins 2/4 = isolated DIO bank supply",
-   "note2": "cut length ~ 150 mm (actual: straight line + vertical rise)"
+   "note2": "cut length ~ 150 mm"
   },
   "J_JS": {
    "title": "J_JS · Micro-Fit 16",
    "sub": "IFB · mate 43025-1600",
    "spare": "16/16 — no spares",
-   "note2": "cut length ~ 180 mm (actual: straight line + vertical rise)"
+   "note2": "cut length ~ 180 mm"
   }
  },
  "hnote": ""

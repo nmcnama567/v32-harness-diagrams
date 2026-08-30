@@ -277,14 +277,14 @@
    "sub": "PWR board · mate 39-01-2120",
    "spare": "pin 12 spare",
    "note": "pin 5 live with master switch OFF",
-   "note2": "cut length ~ 110 mm (actual: straight line + vertical rise)"
+   "note2": "cut length ~ 110 mm"
   },
   "J_RS": {
    "title": "J_RS · Micro-Fit 4",
    "sub": "IFB · mate 43025-0400",
    "spare": "pin 4 spare",
    "note": "pin 3 = SIG_GND/drain (CAN stub ref, no panel cavity)",
-   "note2": "cut length ~ 130 mm (actual: straight line + vertical rise)"
+   "note2": "cut length ~ 130 mm"
   }
  },
  "hnote": ""

@@ -266,7 +266,7 @@ def gen_internal(rc):
 
     fy = H - 40
     s.line(28, fy-14, W-28, fy-14, C["line"], 1)
-    s.text(28, fy+2, f'Every conductor crimp-to-crimp, no splices · one wire per contact · leg cut lengths ACTUAL: straight receptacle-to-over-header line + vertical rise to the entry face (boards ceiling-hung) · positions from TE STEP {rc["stepsrc"]}', 10, fill=C["muted"])
+    s.text(28, fy+2, f'Every conductor crimp-to-crimp, no splices · one wire per contact · leg cut lengths per internal-wiring-definition.md rev d · positions from TE STEP {rc["stepsrc"]}', 10, fill=C["muted"])
     s.text(28, fy+18, f'Wire table: {WIRE_TABLE} · board headers vertical THT — PNs per board-connector-picks.md (pending approval)', 10, fill=C["muted"])
     fn = f'{OUT}/{rc["key"]}-internal.svg'
     s.out(fn)
