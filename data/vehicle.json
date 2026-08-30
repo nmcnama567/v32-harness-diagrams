@@ -391,20 +391,20 @@
    "title": "J_VP1 · Mega-Fit 4 (2×2)",
    "sub": "PWR board · mate 171692-0104",
    "spare": "",
-   "note2": "cut length ~ 120 mm (straight + 2/3 interior height)"
+   "note2": "cut length ~ 320 mm (actual: straight line + vertical rise)"
   },
   "J_VP2": {
    "title": "J_VP2 · Micro-Fit 4",
    "sub": "PWR board · mate 43025-0400",
    "spare": "pin 4 spare",
    "note": "loop pins live via safety chain",
-   "note2": "cut length ~ 130 mm (straight + 2/3 interior height)"
+   "note2": "cut length ~ 140 mm (actual: straight line + vertical rise)"
   },
   "J_VS": {
    "title": "J_VS · Micro-Fit 16",
    "sub": "IFB · mate 43025-1600",
    "spare": "pins 12-16 spare",
-   "note2": "cut length ~ 240 mm (straight + 2/3 interior height)"
+   "note2": "cut length ~ 80 mm (actual: straight line + vertical rise)"
   }
  },
  "hnote": ""

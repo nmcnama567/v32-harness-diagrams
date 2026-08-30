@@ -221,3 +221,26 @@ Changes vs the original line list:
 - JETSON s20-13 now carries **SEAT_EMU_SENSE (DIO in)** to J_JS pin 16. Ignition sense is descoped: J_BRG pin 9 is unloaded on the interface board and the T15 wire terminates at KEY_IN on the power board only. The rev-b note "SEAT_EMU_SENSE is dropped" is superseded — it took the freed cavity.
 - **Leg cut lengths** stamped on every housing block: straight 2D line, receptacle station to header (positions from v32-enclosure-cad: stations x = −123/−41/+41/+123 on the front wall y = −101, boards POWER (−76,20) headers local y −61, INTERFACE (83,−10) headers local y −33), plus 2/3 of the 82 mm interior height (≈55 mm), rounded up to 10 mm. VEHICLE: J_VP1 120 / J_VP2 130 / J_VS 240. ROOF: J_RP 130 / J_RS 190. STEERING: J_SP 140 / J_SS 140. JETSON: J_JP 230 / J_JS 120. Panel switch → J50: 250.
 - **Physical wire colours** locked, one per class, matching the drawing palette: PWR red, GND/returns black, CAN H yellow, CAN L green, signal white, safety chain violet. 20/18/16 AWG in UL1007/UL1015, 12 AWG battery and steering pairs in GXL red/black. ES_RX stays violet with the always-on warning label.
+
+## rev d (2026-08-30) — ACTUAL lengths for the ceiling-hung 344 x 210 enclosure
+
+The enclosure architecture the rev-c lengths assumed (floor-standing boards, 330 x 210 box) is superseded: the live enclosure is the 344 x 210 machined tub with BOTH boards ceiling-hung component-side down (POWER east bay at (50.5, 7.4) mounted flip-only, INTERFACE west bay at (-107, -20) mounted flip+z180), stations repacked to x = -110 / -56 / -5 / +46 on the front wall (y = -105), switch + LED at x = -145.5.
+
+**Cut-length rule (his, 2026-08-30, replaces the 2/3-height adder):** straight plan line from the receptacle rear grommet (y = -85.3, z = 45) to the point over the board header, plus the vertical rise to that header family's entry face (board component face z = 65.4 minus family height: Mega-Fit 50.6, Mini-Fit 52.6, Micro-Fit 55.5, XH 58.4), rounded up to 10 mm.
+
+| Leg | plan + rise | cut |
+|---|---|---|
+| VEHICLE pwr J_VP1 (battery 2+2, 12 AWG) | 306.7 + 5.6 | **320** |
+| VEHICLE pwr J_VP2 (e-stop loop + T15) | 128.1 + 10.5 | **140** |
+| VEHICLE sig J_VS | 68.3 + 10.5 | **80** |
+| ROOF pwr J_RP1 | 93.0 + 7.6 | **110** |
+| ROOF sig J_RS | 117.5 + 10.5 | **130** |
+| STEERING pwr J_SP1 | 66.5 + 5.6 | **80** |
+| STEERING sig J_SS | 138.5 + 7.6 | **150** |
+| JETSON pwr J_JP1 | 141.6 + 7.6 | **150** |
+| JETSON sig J_JS | 161.6 + 10.5 | **180** |
+| Panel switch (z 31.5) -> J50 | 329.6 + 24.0 | **360** |
+| Panel LED (z 55.5) -> J3 lamp | 113.0 + 2.9 | **120** |
+| Bridge J_BRG-P <-> J_BRG-I | 93.3 + 0 | **100** |
+
+Battery run note: J_VP1 sits at the east-bay board's far corner from the VEHICLE station, hence 320 on the 12 AWG pairs. All nine drawings regenerated with these values ("actual: straight line + vertical rise" stamped on every housing block); connector names carry the 2026-08-28 board refs (J_RP1/J_JP1/J_SP1 on the real power board).

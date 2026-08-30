@@ -135,14 +135,14 @@
    "title": "J_SP · Mega-Fit 2 (2×1)",
    "sub": "PWR board · mate 171692-0102",
    "spare": "",
-   "note2": "cut length ~ 140 mm (straight + 2/3 interior height)"
+   "note2": "cut length ~ 80 mm (actual: straight line + vertical rise)"
   },
   "J_SS": {
    "title": "J_SS · Mini-Fit Jr 4",
    "sub": "IFB · mate 39-01-2040 · HCS 45750-3112",
    "spare": "pin 4 spare",
    "note": "pin 3 = SIG_GND (no panel cavity)",
-   "note2": "cut length ~ 140 mm (straight + 2/3 interior height)"
+   "note2": "cut length ~ 150 mm (actual: straight line + vertical rise)"
   }
  },
  "hnote": ""
