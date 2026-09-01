@@ -296,3 +296,24 @@ J_VP1 320, J_VP2 140, J_VS 80, J_RP1 110, J_RS 130, J_SP1 80, J_SS 150,
 J_JP1 150, J_JS 180, switch J50 360, lamp J3 120, bridge 100. The rev-e
 appendix above is design history. All nine drawings regenerated with
 the restored values (footer stamped rev f).
+
+## rev g (2026-09-01) — integral mounts; IFB raised 10
+
+The enclosure moved to INTEGRAL blind-tapped mounts machined down from
+the ceiling (no standoffs, no roof penetrations — the sealed volume is
+never pierced). The power board stays at back z 67 (the (137, ±69)
+Jetson bosses inside its outline pin it there), so ALL power-side legs
+keep their rev-d/f values: J_VP1 320, J_VP2 140, J_RP1 110, J_SP1 80,
+J_JP1 150, switch J50 360. The INTERFACE board is raised 10 (back z 77,
+component face 75.49 — his call), so its six legs grow by 10 each:
+
+| Leg | plan + rise | cut (rev f) |
+|---|---|---|
+| VEHICLE sig J_VS | 68.3 + 20.6 | **90** (was 80) |
+| ROOF sig J_RS | 117.5 + 20.6 | **140** (was 130) |
+| STEERING sig J_SS | 138.5 + 17.7 | **160** (was 150) |
+| JETSON sig J_JS | 161.6 + 20.6 | **190** (was 180) |
+| Panel LED (z 55.5) -> J3 lamp | 113.0 + 13.0 | **130** (was 120) |
+| Bridge J_BRG-P <-> J_BRG-I | 93.3 + 10 dz | **110** (was 100) |
+
+All nine drawings regenerated (footer rev g).
