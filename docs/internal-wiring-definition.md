@@ -282,3 +282,17 @@ legs change in both directions.
 All harness ends are now plugged FACE-UP on the open tray (tub off);
 the receptacle pigtails tether the tub to the tray until their board-end
 plugs are pulled. All nine drawings regenerated with these values.
+
+## rev f (2026-09-01) — ceiling-standoff mount: rev-d lengths RESTORED
+
+The base-mount excursion of rev e is reverted the same day (his call:
+the boards stay on the enclosure roof). The live enclosure hangs both
+boards component-side down at the SAME z as the ceiling-pad era — the
+machined pad islands are replaced by F-F x18 standoffs through-bolted
+from the enclosure top face (flush countersunk screws, fitted before
+the Jetson) — so every world position, entry face and leg length of
+rev d applies verbatim. The rev-d table is the current build table:
+J_VP1 320, J_VP2 140, J_VS 80, J_RP1 110, J_RS 130, J_SP1 80, J_SS 150,
+J_JP1 150, J_JS 180, switch J50 360, lamp J3 120, bridge 100. The rev-e
+appendix above is design history. All nine drawings regenerated with
+the restored values (footer stamped rev f).

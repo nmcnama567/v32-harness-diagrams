@@ -284,7 +284,7 @@
    "sub": "IFB · mate 43025-0400",
    "spare": "pin 4 spare",
    "note": "pin 3 = SIG_GND/drain (CAN stub ref, no panel cavity)",
-   "note2": "cut length ~ 110 mm"
+   "note2": "cut length ~ 130 mm"
   }
  },
  "hnote": ""
