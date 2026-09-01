@@ -244,3 +244,41 @@ The enclosure architecture the rev-c lengths assumed (floor-standing boards, 330
 | Bridge J_BRG-P <-> J_BRG-I | 93.3 + 0 | **100** |
 
 Battery run note: J_VP1 sits at the east-bay board's far corner from the VEHICLE station, hence 320 on the 12 AWG pairs. All nine drawings regenerated with these values ("actual: straight line + vertical rise" stamped on every housing block); connector names carry the 2026-08-28 board refs (J_RP1/J_JP1/J_SP1 on the real power board).
+
+## rev e (2026-09-01) — BASE-MOUNT lengths (supersedes rev d)
+
+The rev-d lengths assumed the ceiling-hung boards. The live enclosure now
+mounts BOTH boards component-side UP on standoffs from the 10-thick base
+plate (his 2026-09-01 call — the machined ceiling pads and their JLC DFM
+troubles are deleted): board slab z 16..17.6, POWER east bay (50.5, 7.4)
+bench + z180 (bridge edge west), INTERFACE west bay (-107, -20) plain
+bench (bridge edge east). Stations (x = -110 / -56 / -5 / +46, z 45) and
+the switch/LED station (x -145.5, z 31.5 / 55.5) are unchanged.
+
+**Cut-length rule (unchanged in form):** straight plan line from the
+receptacle rear grommet (y = -85.3, z = 45) to the point over the board
+header, plus the vertical drop to that header family's entry face — now
+ABOVE the board (component face ~17.6 plus family height: Mega-Fit
+z 32.4, Mini-Fit z 30.4, Micro-Fit z 27.4, XH z 24.5), rounded up to
+10 mm. Orientation flips move several headers to different edges, so
+legs change in both directions.
+
+| Leg | plan + rise | cut (rev d) |
+|---|---|---|
+| VEHICLE pwr J_VP1 (battery 2+2, 12 AWG) | 265.5 + 12.6 | **280** (was 320) |
+| VEHICLE pwr J_VP2 (e-stop loop + T15) | 214.8 + 17.6 | **240** (was 140 — header now on the rear edge) |
+| VEHICLE sig J_VS | 74.7 + 17.6 | **100** (was 80) |
+| ROOF pwr J_RP1 | 94.9 + 14.6 | **110** (unchanged) |
+| ROOF sig J_RS | 83.2 + 17.6 | **110** (was 130) |
+| STEERING pwr J_SP1 | 146.9 + 12.6 | **160** (was 80 — header now mid-board rear) |
+| STEERING sig J_SS | 110.3 + 14.6 | **130** (was 150) |
+| JETSON pwr J_JP1 | 113.8 + 14.6 | **130** (was 150) |
+| JETSON sig J_JS | 180.7 + 17.6 | **200** (was 180) |
+| Panel switch (z 31.5) -> J50 | 311.0 + 4.1 | **320** (was 360) |
+| Panel LED feed rides in J50 (pins 3/6) | — | — |
+| Lamp J3 (IFB XH) -> LED station | 74.0 + 31.0 | **110** (was 120) |
+| Bridge J_BRG-P <-> J_BRG-I | 46.7 + 0 | **50** (was 100 — housings now 46.7 apart) |
+
+All harness ends are now plugged FACE-UP on the open tray (tub off);
+the receptacle pigtails tether the tub to the tray until their board-end
+plugs are pulled. All nine drawings regenerated with these values.
