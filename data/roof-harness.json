@@ -9,12 +9,12 @@
  "tedoc": "TE 0425-013-1800 rev D (SKT view)",
  "stepsrc": "c-hd34-18-14pe-b-3d.stp, mirrored for the plug",
  "date": "2026-09-01",
- "title": "ROOF HARNESS — HD36-18-14SE plug · ROPS trunk · box plugs",
+ "title": "ROOF HARNESS — HD36-18-14SE plug · ROPS trunk · SP21 7-pin box plug",
  "sub": "machine side of the enclosure ROOF receptacle · trunk 3.5 m: 2.0 m ROPS drop + 0.9 m roof + cab tail · cavity IDs per TE 0425-013-1800 rev D (SKT view)",
  "view_title": "PLUG REAR VIEW (wire side)",
  "view_note": "as seen loading contacts · letters moulded on the plug grommet",
  "mirror": true,
- "fork_label": "Y-fork · at the box",
+ "fork_label": "loom clamp · at the box",
  "leg_titles": [
   "BOX POWER LEG",
   "E-STOP RX LEG"
@@ -198,9 +198,9 @@
    "ES_RX (ALWAYS-ON)",
    "18",
    "SAFE",
-   "signal",
-   "SP13",
-   1,
+   "power",
+   "SP21",
+   5,
    "hot"
   ],
   [
@@ -208,19 +208,19 @@
    "RX_GND",
    "18",
    "GND",
-   "signal",
-   "SP13",
-   2,
+   "power",
+   "SP21",
+   6,
    ""
   ],
   [
    "K",
    "RX_STAT",
-   "20",
+   "18",
    "SAFE",
-   "signal",
-   "SP13",
-   3,
+   "power",
+   "SP21",
+   7,
    ""
   ]
  ],
@@ -235,18 +235,11 @@
  ],
  "housings": {
   "SP21": {
-   "title": "SP21 4-pin cable plug",
-   "sub": "Weipu SP2110/P4 · mates wall socket SP2112/S4",
+   "title": "SP21 7-pin cable plug",
+   "sub": "Weipu SP2110/P7 · mates SP2112/S7 · 15 A pins",
    "spare": "",
-   "note": "1/2 converter feed · 3/4 beacon pass-through",
-   "note2": "leg 0.30 m past the fork"
-  },
-  "SP13": {
-   "title": "SP13 4-pin cable plug",
-   "sub": "Weipu SP1310/P4 · mates wall socket SP1312/S4",
-   "spare": "pin 4 spare",
-   "note": "pin 1 live with master switch OFF",
-   "note2": "leg 0.30 m past the fork"
+   "note": "pin 5 live with master switch OFF",
+   "note2": "1/2 converter · 3/4 beacon pass-through · 5/6/7 receiver"
   }
  },
  "hnote": ""
