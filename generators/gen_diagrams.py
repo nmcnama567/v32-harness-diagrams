@@ -736,7 +736,23 @@ def gen_box(rc):
         pic = g.get("pict")
         if pic:
             pcx, pcy = 150, gy0 + 30 + (gh - 34) / 2 - (14 if pic["kind"] in ("socket", "gland") else 0)
-            if pic["kind"] == "socket":
+            if pic["kind"] == "cavities":
+                # HD30 insert rear (wire-side) view from a receptacle data file:
+                # every cavity lettered, the wired ones in ink, the rest muted
+                src = json.load(open(os.path.join(DATA, pic["from"])))
+                r = pic.get("r", 40)
+                circle(pcx, pcy, r + 10, "#9a9a9a", "#fbfbfa", 2.0)
+                circle(pcx, pcy, r, "#c0c0c0", "#ffffff", 1.0)
+                sc = 0.82 * r / 9.207
+                used = set(pic.get("used", []))
+                mx = -1 if pic.get("mirror") else 1
+                for cav, (_sz, cx, cy) in src["cavities"].items():
+                    px, py = pcx + mx * cx * sc, pcy - cy * sc
+                    on = cav in used
+                    circle(px, py, 7.5, (C["ink"] if on else "#bbb"), ("#fff" if on else "#f4f4f2"), (1.4 if on else 0.9))
+                    text(px, py + 3, cav, 8.5, (C["ink"] if on else "#aaa"), anchor="middle", bold=on, mono=True, audit=False)
+                text(pcx, pcy + r + 26, pic.get("caption", "rear view"), 9, "#888", anchor="middle", audit=False)
+            elif pic["kind"] == "socket":
                 r = pic.get("r", 36)
                 circle(pcx, pcy, r + 8, "#9a9a9a", "#fbfbfa", 2.0)
                 circle(pcx, pcy, r, "#c0c0c0", "#ffffff", 1.0)

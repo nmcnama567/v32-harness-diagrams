@@ -9,7 +9,7 @@
  "tedoc": "TE 0425-013-1800 rev D (SKT view)",
  "stepsrc": "c-hd34-18-14pe-b-3d.stp, mirrored for the plug",
  "date": "2026-09-01",
- "title": "ROOF HARNESS — HD36-18-14SE plug · ROPS trunk · SP21 7-pin box plug",
+ "title": "ROOF HARNESS — HD36-18-14SE plug at both ends · ROPS trunk",
  "sub": "machine side of the enclosure ROOF receptacle · trunk 3.5 m: 2.0 m ROPS drop + 0.9 m roof + cab tail · cavity IDs per TE 0425-013-1800 rev D (SKT view)",
  "view_title": "PLUG REAR VIEW (wire side)",
  "view_note": "as seen loading contacts · letters moulded on the plug grommet",
@@ -20,7 +20,7 @@
   "E-STOP RX LEG"
  ],
  "spare_text": "spare (sealed) — no wire",
- "footer1": "Machine-side harness, mates the enclosure ROOF receptacle · size-16 socket contacts TE 0462-201-16141 · seven cavities sealed with TE 114017 plugs · plug rear view mirrors the receptacle rear view",
+ "footer1": "Machine-side harness, mates the enclosure ROOF receptacle and the box receptacle · size-16 socket contacts TE 0462-201-16141 at both ends · seven cavities sealed with TE 114017 at each end · both plug rear views mirror the receptacle rear view",
  "footer2": "Wire table: roof-harness-definition.md (2026-09-01) · FH4 is a 5 A position today; the Gen 3 Standard draws up to 100 W (7.7 A at 13 V), so FH4 moves to 10 A before this harness carries the Standard",
  "cavities": {
   "P": [
@@ -159,8 +159,8 @@
    "16",
    "PWR",
    "power",
-   "SP21",
-   1,
+   "HD36B",
+   "A",
    ""
   ],
   [
@@ -169,8 +169,8 @@
    "16",
    "GND",
    "power",
-   "SP21",
-   2,
+   "HD36B",
+   "B",
    ""
   ],
   [
@@ -179,8 +179,8 @@
    "16",
    "PWR",
    "power",
-   "SP21",
-   3,
+   "HD36B",
+   "E",
    ""
   ],
   [
@@ -189,8 +189,8 @@
    "16",
    "GND",
    "power",
-   "SP21",
-   4,
+   "HD36B",
+   "F",
    ""
   ],
   [
@@ -199,8 +199,8 @@
    "18",
    "SAFE",
    "power",
-   "SP21",
-   5,
+   "HD36B",
+   "J",
    "hot"
   ],
   [
@@ -209,8 +209,8 @@
    "18",
    "GND",
    "power",
-   "SP21",
-   6,
+   "HD36B",
+   "L",
    ""
   ],
   [
@@ -219,8 +219,8 @@
    "18",
    "SAFE",
    "power",
-   "SP21",
-   7,
+   "HD36B",
+   "K",
    ""
   ]
  ],
@@ -234,12 +234,12 @@
   "P"
  ],
  "housings": {
-  "SP21": {
-   "title": "SP21 7-pin cable plug",
-   "sub": "Weipu SP2110/P7 · mates SP2112/S7 · 15 A pins",
+  "HD36B": {
+   "title": "HD36-18-14SE box plug",
+   "sub": "second plug, same letters · mates the box HD34-18-14PE",
    "spare": "",
-   "note": "pin 5 live with master switch OFF",
-   "note2": "1/2 converter · 3/4 beacon pass-through · 5/6/7 receiver"
+   "note": "J live with master switch OFF",
+   "note2": "A/B converter · E/F beacon cord · J/L/K receiver"
   }
  },
  "hnote": ""

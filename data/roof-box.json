@@ -7,51 +7,52 @@
  "sub": "QILIPSU 410 x 310 x 180 · wall sockets seen from inside (solder-cup side) · I/O row 52 mm above the floor",
  "sources": [
   {
-   "name": "SP21 7-pin socket · roof harness",
-   "sub": "SP2112/S7",
+   "name": "HD34-18-14PE receptacle",
+   "sub": "wire side · Digi-Key 6600374",
    "pict": {
-    "kind": "socket",
-    "pins": [
-     1,
-     2,
-     3,
-     4,
-     5,
-     6,
-     7
-    ],
-    "start": -90,
+    "kind": "cavities",
+    "from": "roof.json",
+    "mirror": true,
     "r": 40,
-    "caption": "rear view · numbers moulded on the socket"
+    "used": [
+     "A",
+     "B",
+     "E",
+     "F",
+     "J",
+     "K",
+     "L"
+    ],
+    "caption": "rear (wire) view · size-16 crimp pins 0460-202-16141"
    },
    "terminals": [
     [
-     "sp21.1",
-     "SP21·1"
+     "rc.A",
+     "A"
     ],
     [
-     "sp21.2",
-     "SP21·2"
+     "rc.B",
+     "B"
     ],
     [
-     "sp21.3",
-     "SP21·3"
+     "rc.E",
+     "E"
     ],
     [
-     "sp21.4",
-     "SP21·4"
+     "rc.F",
+     "F"
     ],
     [
-     "sp21.5",
-     "SP21·5"
+     "rc.J",
+     "J"
     ],
     [
-     "sp21.6",
-     "SP21·6"
+     "rc.L",
+     "L"
     ],
     [
-     "sp21.7",
-     "SP21·7"
+     "rc.K",
+     "K"
     ]
    ]
   },
@@ -86,15 +87,15 @@
    ]
   },
   {
-   "name": "KVT-ER 63|4 split gland",
-   "sub": "icotek 45456",
+   "name": "Cabtite CGS M63 gland",
+   "sub": "Digi-Key 9750764",
    "pict": {
     "kind": "gland",
     "labels": [
      "dish",
      "LAN"
     ],
-    "caption": "moulded plugs pass through"
+    "caption": "4 sealing elements: dish · LAN · beacon cord · blind"
    },
    "terminals": [
     [
@@ -185,45 +186,45 @@
  ],
  "wires": [
   [
-   "sp21.1",
+   "rc.A",
    "conv.in+",
-   "STARLINK_13V · converter lead 30 cm (supplied), soldered to the cup",
+   "STARLINK_13V · converter red lead, crimp pin",
    "PWR"
   ],
   [
-   "sp21.2",
+   "rc.B",
    "conv.in-",
-   "STARLINK_GND · converter lead 30 cm (supplied)",
+   "STARLINK_GND · converter black lead, crimp pin",
    "GND"
   ],
   [
-   "sp21.3",
+   "rc.E",
    "bcn.1",
-   "BCN_13V pass-through · 18 AWG · 250 mm",
+   "BCN_13V · beacon cord + , crimp pin",
    "PWR"
   ],
   [
-   "sp21.4",
+   "rc.F",
    "bcn.2",
-   "BCN_GND pass-through · 18 AWG · 250 mm",
+   "BCN_GND · beacon cord - , crimp pin",
    "GND"
   ],
   [
-   "sp21.5",
+   "rc.J",
    "rx.red",
-   "ES_RX (ALWAYS-ON) · receiver pigtail 18 AWG",
+   "ES_RX (ALWAYS-ON) · receiver red 18 AWG, crimp pin",
    "SAFE"
   ],
   [
-   "sp21.6",
+   "rc.L",
    "rx.black",
-   "RX_GND · receiver pigtail 18 AWG",
+   "RX_GND · receiver black 18 AWG, crimp pin",
    "GND"
   ],
   [
-   "sp21.7",
+   "rc.K",
    "rx.white",
-   "RX_STAT · receiver pigtail 18 AWG (out 1, sourcing)",
+   "RX_STAT · receiver white (out 1, sourcing), crimp pin",
    "SAFE"
   ],
   [
@@ -241,13 +242,13 @@
   [
    "kvt.dish",
    "rtr.dish",
-   "Starlink cable, moulded plug · through the Ø63.4 cut-out first",
+   "Starlink cable, moulded plug · through the gland first",
    "DATA"
   ],
   [
    "kvt.lan",
    "rtr.lan",
-   "CAT6A outdoor 10 ft, moulded RJ45 · to the cab switch",
+   "outdoor Cat6 10 ft, moulded RJ45 · to the cab switch",
    "DATA"
   ]
  ],
@@ -261,13 +262,14 @@
  "warning": {
   "title": "ALWAYS HOT",
   "lines": [
-   "SP21 pin 5 (ES_RX) and the receiver RED lead are live with the kit master switch OFF.",
+   "HD34 cavity J (ES_RX) and the receiver RED lead are live with the kit master switch OFF.",
    "The feed comes from the enclosure safety chain, upstream of the master relay."
   ]
  },
  "footer": [
-  "No junction blocks: converter leads solder straight to the SP21 cups, the beacon feed passes through untapped · both wall sockets are Weipu panel sockets with the back nut inside",
+  "No solder anywhere: every conductor ends in a size-16 crimp pin pushed into the receptacle rear · the seven unused cavities take 114017 sealing plugs · beacon cord enters through the gland uncut",
   "Wire table: roof-harness-definition.md (2026-09-01) · dish and LAN plugs are moulded, never cut · connect the dome lead only after the dome is bolted to the lid and the receiver is on its bracket"
  ],
- "height": 1200
+ "height": 1200,
+ "subtitle": "QILIPSU 410 x 310 x 180 · receptacle seen from inside (wire side, pins) · I/O row 52 mm above the floor"
 }
