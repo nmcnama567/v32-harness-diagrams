@@ -4,7 +4,7 @@
  "key": "roof-box",
  "date": "2026-09-01",
  "title": "ROOF BOX — I/O wall to devices · internal wiring",
- "sub": "QILIPSU 410 x 310 x 180 · wall sockets seen from inside (solder-cup side) · I/O row 52 mm above the floor",
+ "sub": "QILIPSU 410 x 310 x 180 · receptacle seen from inside (wire side, pins) · I/O row 52 mm above the floor",
  "sources": [
   {
    "name": "HD34-18-14PE receptacle",
@@ -112,7 +112,7 @@
  "destinations": [
   {
    "title": "Converter QL-DC-DC57V4.5A",
-   "sub": "input leads 30 cm (supplied), soldered to the SP21 cups",
+   "sub": "input leads 30 cm (supplied), crimp pins into A / B",
    "terminals": [
     [
      "conv.in+",
@@ -125,16 +125,16 @@
    ]
   },
   {
-   "title": "SP13 2-pin socket · beacon out",
-   "sub": "SP1312/S2 · wall socket, beacon cord plugs in outside",
+   "title": "Beacon cord · through the gland",
+   "sub": "beacon pigtail, uncut · crimp pins into E / F",
    "terminals": [
     [
      "bcn.1",
-     "1"
+     "+ lead"
     ],
     [
      "bcn.2",
-     "2"
+     "- lead"
     ]
    ]
   },
@@ -270,6 +270,5 @@
   "No solder anywhere: every conductor ends in a size-16 crimp pin pushed into the receptacle rear · the seven unused cavities take 114017 sealing plugs · beacon cord enters through the gland uncut",
   "Wire table: roof-harness-definition.md (2026-09-01) · dish and LAN plugs are moulded, never cut · connect the dome lead only after the dome is bolted to the lid and the receiver is on its bracket"
  ],
- "height": 1200,
- "subtitle": "QILIPSU 410 x 310 x 180 · receptacle seen from inside (wire side, pins) · I/O row 52 mm above the floor"
+ "height": 1200
 }
