@@ -1,0 +1,293 @@
+{
+ "kind": "box",
+ "order": 70,
+ "key": "roof-box",
+ "date": "2026-09-01",
+ "title": "ROOF BOX — I/O wall to devices · internal wiring",
+ "sub": "QILIPSU 410 x 310 x 180 · wall sockets seen from inside (solder-cup side) · I/O row 52 mm above the floor",
+ "sources": [
+  {
+   "name": "SP21 4-pin socket · 13 V in",
+   "sub": "SP2112/S4",
+   "pict": {
+    "kind": "socket",
+    "pins": [
+     1,
+     2,
+     3,
+     4
+    ],
+    "start": -135,
+    "r": 36,
+    "caption": "rear view · numbers moulded on the socket"
+   },
+   "terminals": [
+    [
+     "sp21.1",
+     "SP21·1"
+    ],
+    [
+     "sp21.2",
+     "SP21·2"
+    ],
+    [
+     "sp21.3",
+     "SP21·3"
+    ],
+    [
+     "sp21.4",
+     "SP21·4"
+    ]
+   ]
+  },
+  {
+   "name": "SP13 4-pin socket · e-stop RX",
+   "sub": "SP1312/S4",
+   "pict": {
+    "kind": "socket",
+    "pins": [
+     1,
+     2,
+     3,
+     4
+    ],
+    "start": -135,
+    "r": 30,
+    "caption": "rear view · numbers moulded on the socket"
+   },
+   "terminals": [
+    [
+     "sp13.1",
+     "SP13·1"
+    ],
+    [
+     "sp13.2",
+     "SP13·2"
+    ],
+    [
+     "sp13.3",
+     "SP13·3"
+    ],
+    [
+     "sp13.4",
+     "SP13·4",
+     "muted"
+    ]
+   ]
+  },
+  {
+   "name": "Lid dome antenna",
+   "sub": "Kar-Tech 003-010-0905",
+   "pict": {
+    "kind": "dome",
+    "caption": "on the lid ground plate",
+    "height": 96
+   },
+   "terminals": [
+    [
+     "dome",
+     "lead"
+    ]
+   ]
+  },
+  {
+   "name": "Converter output lead",
+   "sub": "98 cm, supplied",
+   "pict": {
+    "kind": "lead",
+    "caption": "57 V, barrel plug",
+    "height": 96
+   },
+   "terminals": [
+    [
+     "conv.out",
+     "OUT"
+    ]
+   ]
+  },
+  {
+   "name": "KVT-ER 63|4 split gland",
+   "sub": "icotek 45456",
+   "pict": {
+    "kind": "gland",
+    "labels": [
+     "dish",
+     "LAN"
+    ],
+    "caption": "moulded plugs pass through"
+   },
+   "terminals": [
+    [
+     "kvt.dish",
+     "dish"
+    ],
+    [
+     "kvt.lan",
+     "LAN"
+    ]
+   ]
+  }
+ ],
+ "destinations": [
+  {
+   "title": "Converter QL-DC-DC57V4.5A",
+   "sub": "input leads 30 cm (supplied), soldered to the SP21 cups",
+   "terminals": [
+    [
+     "conv.in+",
+     "IN +   red lead"
+    ],
+    [
+     "conv.in-",
+     "IN −   black lead"
+    ]
+   ]
+  },
+  {
+   "title": "SP13 2-pin socket · beacon out",
+   "sub": "SP1312/S2 · wall socket, beacon cord plugs in outside",
+   "terminals": [
+    [
+     "bcn.1",
+     "1"
+    ],
+    [
+     "bcn.2",
+     "2"
+    ]
+   ]
+  },
+  {
+   "title": "Kar-Tech 3A5633 receiver",
+   "sub": "pigtail 4 x 18 AWG, 0.91 m",
+   "terminals": [
+    [
+     "rx.red",
+     "RED    9–30 V"
+    ],
+    [
+     "rx.black",
+     "BLACK  GND"
+    ],
+    [
+     "rx.white",
+     "WHITE  out 1"
+    ],
+    [
+     "rx.green",
+     "GREEN  out 2, unused, cut back",
+     "muted"
+    ],
+    [
+     "rx.ant",
+     "ANT"
+    ]
+   ]
+  },
+  {
+   "title": "Router 3 (Starlink Gen 3)",
+   "sub": "in the printed bezel",
+   "terminals": [
+    [
+     "rtr.57",
+     "57 V in"
+    ],
+    [
+     "rtr.dish",
+     "DISH"
+    ],
+    [
+     "rtr.lan",
+     "LAN"
+    ]
+   ]
+  }
+ ],
+ "wires": [
+  [
+   "sp21.1",
+   "conv.in+",
+   "STARLINK_13V · converter input lead 30 cm (supplied), soldered to the cup",
+   "PWR"
+  ],
+  [
+   "sp21.2",
+   "conv.in-",
+   "STARLINK_GND · converter input lead 30 cm (supplied)",
+   "GND"
+  ],
+  [
+   "sp21.3",
+   "bcn.1",
+   "BCN_13V pass-through · 18 AWG · 250 mm",
+   "PWR"
+  ],
+  [
+   "sp21.4",
+   "bcn.2",
+   "BCN_GND pass-through · 18 AWG · 250 mm",
+   "GND"
+  ],
+  [
+   "sp13.1",
+   "rx.red",
+   "ES_RX (ALWAYS-ON) · receiver pigtail 18 AWG",
+   "SAFE"
+  ],
+  [
+   "sp13.2",
+   "rx.black",
+   "RX_GND · receiver pigtail 18 AWG",
+   "GND"
+  ],
+  [
+   "sp13.3",
+   "rx.white",
+   "RX_STAT · receiver pigtail 18 AWG (out 1, sourcing)",
+   "SAFE"
+  ],
+  [
+   "dome",
+   "rx.ant",
+   "captive coax from the lid dome · connect last",
+   "RF"
+  ],
+  [
+   "conv.out",
+   "rtr.57",
+   "57 V · supplied lead + barrel plug (98 cm)",
+   "PWR"
+  ],
+  [
+   "kvt.dish",
+   "rtr.dish",
+   "Starlink cable, moulded plug · through the Ø63.4 cut-out before the grommet closes",
+   "DATA"
+  ],
+  [
+   "kvt.lan",
+   "rtr.lan",
+   "CAT6A outdoor 10 ft, moulded RJ45 · to the cab switch",
+   "DATA"
+  ]
+ ],
+ "legend": [
+  "PWR",
+  "GND",
+  "SAFE",
+  "DATA",
+  "RF"
+ ],
+ "warning": {
+  "title": "ALWAYS HOT",
+  "lines": [
+   "SP13 4-pin pin 1 (ES_RX) and the receiver RED lead are live with the kit master switch OFF.",
+   "The feed comes from the enclosure safety chain, upstream of the master relay."
+  ]
+ },
+ "footer": [
+  "No junction blocks: converter leads solder straight to the SP21 cups, the beacon feed passes through untapped · every wall socket is a Weipu panel socket with its back nut inside",
+  "Wire table: roof-harness-definition.md (2026-09-01) · dish and LAN plugs are moulded, never cut · connect the dome lead only after the dome is bolted to the lid and the receiver is on its bracket"
+ ],
+ "height": 1260
+}

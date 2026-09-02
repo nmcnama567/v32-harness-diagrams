@@ -7,3 +7,5 @@ steering-pinout.svg 1300 983
 jetson-internal.svg 1622 1028
 jetson-pinout.svg 1300 1116
 panel-switch-internal.svg 1622 880
+roof-harness.svg 1622 819
+roof-box-internal.svg 1720 1260

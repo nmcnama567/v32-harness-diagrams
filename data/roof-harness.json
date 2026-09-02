@@ -1,0 +1,253 @@
+{
+ "kind": "external",
+ "order": 60,
+ "key": "roof-harness",
+ "outname": "roof-harness",
+ "name": "ROOF HARNESS",
+ "shell": "HD36-18-14SE",
+ "arr": "insert 18-14 · 14× size 16 socket contacts · E seal (blue)",
+ "tedoc": "TE 0425-013-1800 rev D (SKT view)",
+ "stepsrc": "c-hd34-18-14pe-b-3d.stp, mirrored for the plug",
+ "date": "2026-09-01",
+ "title": "ROOF HARNESS — HD36-18-14SE plug · ROPS trunk · box plugs",
+ "sub": "machine side of the enclosure ROOF receptacle · trunk 3.5 m: 2.0 m ROPS drop + 0.9 m roof + cab tail · cavity IDs per TE 0425-013-1800 rev D (SKT view)",
+ "view_title": "PLUG REAR VIEW (wire side)",
+ "view_note": "as seen loading contacts · letters moulded on the plug grommet",
+ "mirror": true,
+ "fork_label": "Y-fork · at the box",
+ "leg_titles": [
+  "BOX POWER LEG",
+  "E-STOP RX LEG"
+ ],
+ "spare_text": "spare (sealed) — no wire",
+ "footer1": "Machine-side harness, mates the enclosure ROOF receptacle · size-16 socket contacts TE 0462-201-16141 · seven cavities sealed with TE 114017 plugs · plug rear view mirrors the receptacle rear view",
+ "footer2": "Wire table: roof-harness-definition.md (2026-09-01) · FH4 is a 5 A position today; the Gen 3 Standard draws up to 100 W (7.7 A at 13 V), so FH4 moves to 10 A before this harness carries the Standard",
+ "cavities": {
+  "P": [
+   16,
+   0.0,
+   9.207
+  ],
+  "E": [
+   16,
+   -5.413,
+   7.447
+  ],
+  "N": [
+   16,
+   5.413,
+   7.447
+  ],
+  "D": [
+   16,
+   0.0,
+   3.721
+  ],
+  "F": [
+   16,
+   -8.755,
+   2.845
+  ],
+  "M": [
+   16,
+   8.755,
+   2.845
+  ],
+  "A": [
+   16,
+   -4.054,
+   0.0
+  ],
+  "C": [
+   16,
+   4.054,
+   0.0
+  ],
+  "G": [
+   16,
+   -8.755,
+   -2.845
+  ],
+  "L": [
+   16,
+   8.755,
+   -2.845
+  ],
+  "B": [
+   16,
+   0.0,
+   -3.721
+  ],
+  "H": [
+   16,
+   -5.413,
+   -7.447
+  ],
+  "K": [
+   16,
+   5.413,
+   -7.447
+  ],
+  "J": [
+   16,
+   0.0,
+   -9.207
+  ]
+ },
+ "ordmap": [
+  [
+   "1",
+   "A"
+  ],
+  [
+   "2",
+   "B"
+  ],
+  [
+   "3",
+   "C"
+  ],
+  [
+   "4",
+   "D"
+  ],
+  [
+   "5",
+   "E"
+  ],
+  [
+   "6",
+   "F"
+  ],
+  [
+   "7",
+   "G"
+  ],
+  [
+   "8",
+   "H"
+  ],
+  [
+   "9",
+   "J"
+  ],
+  [
+   "10",
+   "K"
+  ],
+  [
+   "11",
+   "L"
+  ],
+  [
+   "12",
+   "M"
+  ],
+  [
+   "13",
+   "N"
+  ],
+  [
+   "14",
+   "P"
+  ]
+ ],
+ "wires": [
+  [
+   "A",
+   "STARLINK_13V (FH4)",
+   "16",
+   "PWR",
+   "power",
+   "SP21",
+   1,
+   ""
+  ],
+  [
+   "B",
+   "STARLINK_GND",
+   "16",
+   "GND",
+   "power",
+   "SP21",
+   2,
+   ""
+  ],
+  [
+   "E",
+   "BCN_13V (FH5·K53)",
+   "16",
+   "PWR",
+   "power",
+   "SP21",
+   3,
+   ""
+  ],
+  [
+   "F",
+   "BCN_GND",
+   "16",
+   "GND",
+   "power",
+   "SP21",
+   4,
+   ""
+  ],
+  [
+   "J",
+   "ES_RX (ALWAYS-ON)",
+   "18",
+   "SAFE",
+   "signal",
+   "SP13",
+   1,
+   "hot"
+  ],
+  [
+   "L",
+   "RX_GND",
+   "18",
+   "GND",
+   "signal",
+   "SP13",
+   2,
+   ""
+  ],
+  [
+   "K",
+   "RX_STAT",
+   "20",
+   "SAFE",
+   "signal",
+   "SP13",
+   3,
+   ""
+  ]
+ ],
+ "spare_cavs": [
+  "C",
+  "D",
+  "G",
+  "H",
+  "M",
+  "N",
+  "P"
+ ],
+ "housings": {
+  "SP21": {
+   "title": "SP21 4-pin cable plug",
+   "sub": "Weipu SP2110/P4 · mates wall socket SP2112/S4",
+   "spare": "",
+   "note": "1/2 converter feed · 3/4 beacon pass-through",
+   "note2": "leg 0.30 m past the fork"
+  },
+  "SP13": {
+   "title": "SP13 4-pin cable plug",
+   "sub": "Weipu SP1310/P4 · mates wall socket SP1312/S4",
+   "spare": "pin 4 spare",
+   "note": "pin 1 live with master switch OFF",
+   "note2": "leg 0.30 m past the fork"
+  }
+ },
+ "hnote": ""
+}

@@ -1,6 +1,6 @@
 # V3.2 Harness Diagrams
 
-Generator for the Crewline V3.2 enclosure harness diagrams — nine drawings. Each of the four HD34
+Generator for the Crewline V3.2 enclosure harness diagrams — eleven drawings. Each of the four HD34
 panel receptacles (VEHICLE, ROOF, STEERING, JETSON) gets two:
 
 - **`<key>-internal`** — the internal Y-split pigtail: rear (wire-side) cavity view, one lane per
@@ -56,6 +56,24 @@ with:
 
 Output naming is shared: `<key>-internal.svg/png` (key `panel-switch`). `order` 50 places it after
 the receptacles in the manifest.
+
+### Machine-side and box drawings
+
+Two more data kinds reuse the same renderers and palette:
+
+- `"kind": "external"` — a machine-side harness drawn with the receptacle Y-split renderer. The file
+  carries the same `cavities` / `wires` / `spare_cavs` / `housings` fields as a receptacle plus the
+  strings the renderer would otherwise derive: `title`, `sub`, `view_title`, `view_note`, `mirror`
+  (true: the plug's wire-side view is the receptacle rear view mirrored), `fork_label`, `leg_titles`,
+  `spare_text`, `footer1`, `footer2`, `outname`, and an optional `date`. `data/roof-harness.json` is the
+  ROOF receptacle's machine-side harness: HD36-18-14SE plug, ROPS trunk, SP21 / SP13 box plugs.
+- `"kind": "box"` — wiring inside a junction box (`gen_box`): `sources` (grouped terminal tags with an
+  optional rear-view pictogram), `destinations` (device boxes with terminal rows), `wires`
+  (`[source, destination, label, class]`), `legend`, `warning`, `footer`. `data/roof-box.json` is the
+  roof junction box: wall sockets and gland to the converter, router and e-stop receiver.
+
+Both are truth-sourced from `docs/roof-harness-definition.md`. Output naming: `roof-harness.svg/png`
+and `roof-box-internal.svg/png`, orders 60 and 70.
 
 Truth sources: the wire tables are `docs/internal-wiring-definition.md` (rev b, 2026-08-22); the
 ordinal → real cavity mapping, TE document provenance, and the PANEL → J50 harness table are

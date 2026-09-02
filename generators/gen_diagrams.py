@@ -17,14 +17,15 @@ DATE = META["date"]
 PROJECT = META["project"]
 WIRE_TABLE = f'{META["wire_table"]} ({META["wire_table_date"]})'
 
-RECEPTACLES, PANELS = [], []
+RECEPTACLES, PANELS, EXTERNALS, BOXES = [], [], [], []
 for fn in sorted(os.listdir(DATA)):
     if fn.endswith(".json") and fn != "meta.json":
         with open(os.path.join(DATA, fn)) as f:
             d = json.load(f)
-        (PANELS if d.get("kind") == "panel" else RECEPTACLES).append(d)
-RECEPTACLES.sort(key=lambda rc: rc["order"])
-PANELS.sort(key=lambda rc: rc["order"])
+        kind = d.get("kind")
+        ({"panel": PANELS, "external": EXTERNALS, "box": BOXES}.get(kind, RECEPTACLES)).append(d)
+for lst in (RECEPTACLES, PANELS, EXTERNALS, BOXES):
+    lst.sort(key=lambda rc: rc["order"])
 
 # ---------------------------------------------------------------- palette
 C = {
@@ -35,6 +36,8 @@ C = {
     "SIG":    "#757575",   # generic signal
     "SAFE":   "#7b1fa2",   # e-stop loop / RX trio
     "SPARE":  "#b5b5b5",
+    "DATA":   "#1565c0",   # Starlink dish / LAN, moulded cables
+    "RF":     "#00695c",   # antenna lead (coax)
     "ink":    "#1a1a1a",
     "muted":  "#8a8a8a",
     "line":   "#c9c9c9",
@@ -44,7 +47,9 @@ C = {
 LEGEND_NAMES = {"PWR": "power +13 V / BAT+ — red wire", "GND": "ground / return — black wire",
                 "CANH": "CAN H — yellow wire", "CANL": "CAN L — green wire",
                 "SIG": "signal — white wire", "SAFE": "safety chain — violet wire",
-                "SPARE": "spare (plugged)"}
+                "SPARE": "spare (plugged)",
+                "DATA": "data — Starlink dish / LAN, moulded cables",
+                "RF": "RF — antenna lead (coax)"}
 
 FONT = "Helvetica Neue, Helvetica, Arial, sans-serif"
 MONO = "Menlo, Consolas, monospace"
@@ -178,13 +183,13 @@ def gen_internal(rc):
 
     s = SVG(W, H)
     title_block(s, W,
-        f'{rc["name"]} — {rc["shell"]} · internal Y-split pigtail',
-        f'{rc["arr"]} · cavity IDs per {rc["tedoc"]}',
-        PROJECT, DATE)
+        rc.get("title", f'{rc["name"]} — {rc["shell"]} · internal Y-split pigtail'),
+        rc.get("sub", f'{rc["arr"]} · cavity IDs per {rc["tedoc"]}'),
+        PROJECT, rc.get("date", DATE))
 
-    s.text(cxv, top + 16, "REAR VIEW (wire side)", 12, anchor="middle", weight="bold", fill="#444")
-    draw_view(s, cxv, cyv, R, rc["cavities"], scale, mirror=False, spares=rc["spare_cavs"])
-    s.text(cxv, cyv + R + 34, "as seen from inside enclosure", 10.5, anchor="middle", fill=C["muted"])
+    s.text(cxv, top + 16, rc.get("view_title", "REAR VIEW (wire side)"), 12, anchor="middle", weight="bold", fill="#444")
+    draw_view(s, cxv, cyv, R, rc["cavities"], scale, mirror=rc.get("mirror", False), spares=rc["spare_cavs"])
+    s.text(cxv, cyv + R + 34, rc.get("view_note", "as seen from inside enclosure"), 10.5, anchor="middle", fill=C["muted"])
     ly = cyv + R + 62
     s.text(64, ly, "LEGEND", 11, weight="bold", fill="#444", spacing="1"); ly += 20
     for cl in used_classes:
@@ -203,7 +208,7 @@ def gen_internal(rc):
     # clamp tick + caption in guaranteed pocket above trunk_top between X_TR1..X_FORK
     s.line(X_FORK-4, trunk_top-6, X_FORK-4, trunk_bot+6, "#444", 2.2)
     s.line(X_FORK+1, trunk_top-6, X_FORK+1, trunk_bot+6, "#444", 2.2)
-    s.text((X_TR1+X_FORK)/2, trunk_top-16, "Y-fork" if (p_h and s_h) else "loom clamp", 11.5, anchor="middle", weight="bold", fill="#444")
+    s.text((X_TR1+X_FORK)/2, trunk_top-16, rc.get("fork_label", "Y-fork" if (p_h and s_h) else "loom clamp"), 11.5, anchor="middle", weight="bold", fill="#444")
 
     twmap = {}
     for w in allw:
@@ -238,8 +243,9 @@ def gen_internal(rc):
             s.text(x0+seg, (y1+y2)/2+3.5, "tw", 9, anchor="middle", fill=C["muted"])
 
     if powers and signals:
-        s.text(X_DIV1+6, lanes[powers[0][0]] - 26, "POWER LEG", 12.5, weight="bold", fill="#7a1414", spacing="1")
-        s.text(X_DIV1+6, lanes[signals[0][0]] - 26, "SIGNAL LEG", 12.5, weight="bold", fill="#3a3a6a", spacing="1")
+        legs = rc.get("leg_titles", ["POWER LEG", "SIGNAL LEG"])
+        s.text(X_DIV1+6, lanes[powers[0][0]] - 26, legs[0], 12.5, weight="bold", fill="#7a1414", spacing="1")
+        s.text(X_DIV1+6, lanes[signals[0][0]] - 26, legs[1], 12.5, weight="bold", fill="#3a3a6a", spacing="1")
 
     for h in p_h + s_h:
         meta = rc["housings"][h]
@@ -261,14 +267,14 @@ def gen_internal(rc):
     for cid in rc["spare_cavs"]:
         s.rect(X_TAG, yy-11, TAG_W, 22, stroke=C["SPARE"], fill="#f7f7f5", rx=4, sw=1.1)
         s.text(X_TAG+TAG_W/2, yy+4, cid, 12, anchor="middle", weight="bold", family=MONO, fill=C["muted"])
-        s.text(X_W0+16, yy+4, "spare (plugged) — no wire", 10.5, fill=C["muted"])
+        s.text(X_W0+16, yy+4, rc.get("spare_text", "spare (plugged) — no wire"), 10.5, fill=C["muted"])
         yy += 24
 
     fy = H - 40
     s.line(28, fy-14, W-28, fy-14, C["line"], 1)
-    s.text(28, fy+2, f'Every conductor crimp-to-crimp, no splices · one wire per contact · leg cut lengths per internal-wiring-definition.md rev g · positions from TE STEP {rc["stepsrc"]}', 10, fill=C["muted"])
-    s.text(28, fy+18, f'Wire table: {WIRE_TABLE} · board headers vertical THT — PNs per board-connector-picks.md (pending approval)', 10, fill=C["muted"])
-    fn = f'{OUT}/{rc["key"]}-internal.svg'
+    s.text(28, fy+2, rc.get("footer1", f'Every conductor crimp-to-crimp, no splices · one wire per contact · leg cut lengths per internal-wiring-definition.md rev g · positions from TE STEP {rc["stepsrc"]}'), 10, fill=C["muted"])
+    s.text(28, fy+18, rc.get("footer2", f'Wire table: {WIRE_TABLE} · board headers vertical THT — PNs per board-connector-picks.md (pending approval)'), 10, fill=C["muted"])
+    fn = f'{OUT}/{rc.get("outname", rc["key"] + "-internal")}.svg'
     s.out(fn)
     return fn, W, H
 
@@ -665,6 +671,192 @@ def gen_switch(rc):
         f.write(svg)
     return fn, W, H, [(rc["key"],) + tuple(b) for b in bad]
 
+
+# ---------------------------------------------------------------- junction box
+# Box-internal wiring (data `kind: "box"`): wall sockets / gland / antenna lead on
+# the left as terminal tags grouped per source, orthogonal wire fan with per-wire
+# circuit labels, destination device boxes stacked on the right, warning box,
+# legend, footer. Same emitters and audit as gen_switch.
+def gen_box(rc):
+    W, H = rc.get("width", 1720), rc.get("height", 1180)
+    E, TEXTS, WIRES, BOXES = [], [], [], []
+
+    def text(x, y, s_, size=12, fill="#333", anchor="start", bold=False, mono=False,
+             spacing=None, audit=True):
+        fam = MONO if mono else FONT
+        w = "bold" if bold else "normal"
+        sp = f' letter-spacing="{spacing}"' if spacing else ""
+        E.append(f'<text x="{x}" y="{y}" font-family="{fam}" font-size="{size}" '
+                 f'fill="{fill}" text-anchor="{anchor}" font-weight="{w}"{sp}>{esc(s_)}</text>')
+        if audit:
+            wid = len(s_) * size * (0.62 if mono else 0.56)
+            x0 = x - wid if anchor == "end" else x - wid / 2 if anchor == "middle" else x
+            TEXTS.append((s_, x0, y - size, x0 + wid, y + size * 0.25))
+
+    def rect(x, y, w, h, rx=0, stroke="#555", fill="#fff", sw=1.5, audit=True):
+        E.append(f'<rect x="{x}" y="{y}" width="{w}" height="{h}" rx="{rx}" '
+                 f'stroke="{stroke}" fill="{fill}" stroke-width="{sw}"/>')
+        if audit:
+            BOXES.append((x, y, x + w, y + h))
+
+    def line(x1, y1, x2, y2, stroke="#c9c9c9", sw=1, audit=False):
+        E.append(f'<line x1="{x1}" y1="{y1}" x2="{x2}" y2="{y2}" stroke="{stroke}" '
+                 f'stroke-width="{sw}" stroke-linecap="round"/>')
+        if audit:
+            WIRES.append(((x1, y1), (x2, y2)))
+
+    def circle(cx, cy, r, stroke="#1a1a1a", fill="#fff", sw=1.7):
+        E.append(f'<circle cx="{cx}" cy="{cy}" r="{r}" stroke="{stroke}" '
+                 f'fill="{fill}" stroke-width="{sw}"/>')
+
+    # header band
+    rect(0, 0, W, 78, stroke="none", fill=C["band"], sw=0, audit=False)
+    line(0, 78, W, 78, C["line"], 1)
+    text(28, 34, rc["title"], 21, C["ink"], bold=True, spacing="0.5")
+    text(28, 58, rc["sub"], 12.5, "#555")
+    text(W - 28, 34, PROJECT, 13, "#444", anchor="end", bold=True)
+    text(W - 28, 56, rc.get("date", DATE), 12, "#666", anchor="end")
+
+    # ---- source groups (left): title, optional pictogram, terminal tags
+    SRC_X, TAG_W, PITCH, GROUP_GAP = rc.get("src_x", 470), 74, 38, 54
+    y = 150
+    src_y = {}
+    for g in rc["sources"]:
+        n = len(g["terminals"])
+        gy0 = y - 30
+        gh = 30 + n * PITCH + 4
+        if g.get("pict"):
+            gh = max(gh, 30 + g["pict"].get("height", 128))   # room for the pictogram + caption
+        # group box around the tags with the pictogram on the left
+        rect(60, gy0, SRC_X + TAG_W - 60 + 12, gh, rx=8, stroke="#c9c9c9", fill="#fbfbfa", sw=1.2)
+        text(74, gy0 + 20, g["name"], 12, C["ink"], bold=True)
+        if g.get("sub"):
+            text(SRC_X - 8, gy0 + 20, g["sub"], 9.5, "#8a8a8a", anchor="end")
+        # pictogram: rear view of a circular socket with its pins, or grommets
+        pic = g.get("pict")
+        if pic:
+            pcx, pcy = 150, gy0 + 30 + (gh - 34) / 2 - (14 if pic["kind"] in ("socket", "gland") else 0)
+            if pic["kind"] == "socket":
+                r = pic.get("r", 36)
+                circle(pcx, pcy, r + 8, "#9a9a9a", "#fbfbfa", 2.0)
+                circle(pcx, pcy, r, "#c0c0c0", "#ffffff", 1.0)
+                pins = pic["pins"]
+                for i, pid in enumerate(pins):
+                    a = math.radians(pic.get("start", -135) + i * 360 / len(pins))
+                    px, py = pcx + 0.55 * r * math.cos(a), pcy + 0.55 * r * math.sin(a)
+                    circle(px, py, 9, C["ink"], "#fff", 1.4)
+                    text(px, py + 3.5, str(pid), 9.5, C["ink"], anchor="middle", bold=True, mono=True, audit=False)
+                text(pcx, pcy + r + 24, pic.get("caption", "rear view · solder cups"), 9, "#888", anchor="middle", audit=False)
+            elif pic["kind"] == "gland":
+                circle(pcx, pcy, 40, "#9a9a9a", "#fbfbfa", 2.0)
+                for dx, lab in ((-16, pic["labels"][0]), (16, pic["labels"][1])):
+                    circle(pcx + dx, pcy, 11, C["ink"], "#fff", 1.4)
+                    text(pcx + dx, pcy + 30, lab, 9, "#666", anchor="middle", audit=False)
+                text(pcx, pcy + 62, pic.get("caption", "split gland, 2 grommets"), 9, "#888", anchor="middle", audit=False)
+            elif pic["kind"] == "dome":
+                E.append(f'<path d="M {pcx-30} {pcy+10} A 30 22 0 0 1 {pcx+30} {pcy+10} Z" stroke="{C["ink"]}" fill="#f1f1ee" stroke-width="1.6"/>')
+                line(pcx, pcy + 10, pcx, pcy + 30, C["ink"], 1.6)
+                text(pcx, pcy + 48, pic.get("caption", "dome on the lid"), 9, "#888", anchor="middle", audit=False)
+            elif pic["kind"] == "lead":
+                line(pcx - 30, pcy, pcx + 30, pcy, C["ink"], 2.2)
+                circle(pcx + 30, pcy, 6, C["ink"], "#fff", 1.4)
+                text(pcx, pcy + 24, pic.get("caption", ""), 9, "#888", anchor="middle", audit=False)
+        for t in g["terminals"]:
+            tid, lab, muted = t[0], t[1], (len(t) > 2 and t[2] == "muted")
+            rect(SRC_X, y - 11, TAG_W, 22, rx=4, stroke=("#bbb" if muted else "#888"), sw=1.2)
+            text(SRC_X + TAG_W / 2, y + 4, lab, 11, (C["muted"] if muted else C["ink"]), anchor="middle", bold=True, mono=True, audit=False)
+            src_y[tid] = y
+            y += PITCH
+        y = gy0 + gh + GROUP_GAP
+    src_bottom = y
+
+    # ---- destination boxes (right): title, sub, terminal rows
+    DST_X, DST_W = rc.get("dst_x", 1360), W - rc.get("dst_x", 1360) - 30
+    dst_y = {}
+    y = 150
+    for d in rc["destinations"]:
+        n = len(d["terminals"])
+        by0 = y - 30
+        bh = 44 + n * PITCH + (16 if d.get("note") else 0)
+        rect(DST_X, by0, DST_W, bh, rx=8, stroke="#555", fill="#fafaf8", sw=1.8)
+        text(DST_X + 12, by0 + 22, d["title"], 12.5, C["ink"], bold=True)
+        text(DST_X + 12, by0 + 40, d.get("sub", ""), 10, "#666")
+        ty = by0 + 44 + 18
+        for t in d["terminals"]:
+            tid, lab, muted = t[0], t[1], (len(t) > 2 and t[2] == "muted")
+            line(DST_X - 2, ty, DST_X + 7, ty, ("#bbb" if muted else "#555"), 2)
+            text(DST_X + 14, ty + 4, lab, 10.5, (C["muted"] if muted else "#222"), bold=not muted, mono=True, audit=False)
+            dst_y[tid] = ty
+            ty += PITCH
+        if d.get("note"):
+            text(DST_X + 12, ty - 8, d["note"], 9.5, "#8a8a8a", audit=False)
+        y = by0 + bh + 40
+
+    # ---- wires: H from the source tag, V at a jog column, H into the destination.
+    XA, XB = SRC_X + TAG_W + 2, DST_X - 4
+    wires = rc["wires"]
+    order = sorted(range(len(wires)), key=lambda k: abs(src_y[wires[k][0]] - dst_y[wires[k][1]]))
+    lane = {k: i for i, k in enumerate(order)}
+    nw = max(1, len(wires) - 1)
+    for wi, (sid, did, label, cl) in enumerate(wires):
+        y1, y2 = src_y[sid], dst_y[did]
+        col = C[cl]
+        xm = XA + (0.36 + 0.44 * lane[wi] / nw) * (XB - XA)
+        E.append(f'<path d="M {XA} {y1} L {xm} {y1} L {xm} {y2} L {XB} {y2}" stroke="{col}" '
+                 f'stroke-width="2.0" fill="none" stroke-linecap="round" stroke-linejoin="round"/>')
+        WIRES.append(((XA, y1), (xm, y1)))
+        WIRES.append(((xm, y2), (XB, y2)))
+        text(XA + 14, y1 - 7, label, 10.5, ("#8a1010" if "ALWAYS-ON" in label else "#333"))
+
+    # ---- legend
+    ly = src_bottom + 10
+    text(74, ly, "LEGEND", 12.5, C["ink"], bold=True, spacing="1")
+    for i, cl in enumerate(rc["legend"]):
+        yy = ly + 24 + i * 22
+        line(74, yy - 4, 106, yy - 4, C[cl], 3)
+        text(116, yy, LEGEND_NAMES[cl], 11.5, "#333")
+
+    # ---- warning box
+    wb = rc["warning"]
+    wx, wy, ww, wh = rc.get("warn_x", 640), rc.get("warn_y", H - 230), 660, 92
+    rect(wx, wy, ww, wh, rx=8, stroke=C["PWR"], fill="#fdf3f2", sw=2)
+    text(wx + 16, wy + 26, wb["title"], 13.5, "#7a1414", bold=True, spacing="0.5")
+    for k, ln in enumerate(wb["lines"]):
+        text(wx + 16, wy + 48 + 18 * k, ln, 11, "#7a1414")
+
+    # ---- footer
+    line(36, H - 76, W - 36, H - 76, C["line"], 1)
+    for k, ln in enumerate(rc["footer"]):
+        text(36, H - 52 + 20 * k, ln, 10.5, "#666")
+
+    # ---- audit: text x wire (horizontal runs), text x text, text x box-edge
+    bad = []
+    for s_, x0, y0, x1, y1 in TEXTS:
+        for (a, b) in WIRES:
+            (wx1, wy1), (wx2, wy2) = (a, b)
+            if abs(wy1 - wy2) < 0.5 and y0 < wy1 < y1 and min(wx1, wx2) < x1 and max(wx1, wx2) > x0:
+                bad.append(("text-wire", s_[:40], round(wy1)))
+    for i in range(len(TEXTS)):
+        for j in range(i + 1, len(TEXTS)):
+            s1, a0, b0, a1, b1 = TEXTS[i]
+            s2, c0, d0, c1, d1 = TEXTS[j]
+            if a0 < c1 - 2 and c0 < a1 - 2 and b0 < d1 - 2 and d0 < b1 - 2:
+                bad.append(("text-text", s1[:25], s2[:25]))
+    for s_, x0, y0, x1, y1 in TEXTS:
+        for (bx0, by0, bx1, by1) in BOXES:
+            inside = bx0 < x0 and x1 < bx1 and by0 < y0 and y1 < by1
+            outside = x1 < bx0 or x0 > bx1 or y1 < by0 or y0 > by1
+            if not inside and not outside:
+                bad.append(("text-boxedge", s_[:40], (bx0, by0)))
+
+    svg = (f'<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H}" '
+           f'viewBox="0 0 {W} {H}"><rect x="0" y="0" width="{W}" height="{H}" '
+           f'fill="{C["paper"]}"/>' + "".join(E) + "</svg>")
+    fn = f'{OUT}/{rc["key"]}-internal.svg'
+    with open(fn, "w") as f:
+        f.write(svg)
+    return fn, W, H, [(rc["key"],) + tuple(b) for b in bad]
+
 if __name__ == "__main__":
     os.makedirs(OUT, exist_ok=True)
     manifest, warns = [], []
@@ -679,6 +871,13 @@ if __name__ == "__main__":
         f3 = gen_switch(rc)
         manifest.append((f3[0], f3[1], f3[2]))
         warns += f3[3]
+    for rc in EXTERNALS:
+        f4 = gen_internal(rc)
+        manifest.append((f4[0], f4[1], f4[2]))
+    for rc in BOXES:
+        f5 = gen_box(rc)
+        manifest.append((f5[0], f5[1], f5[2]))
+        warns += f5[3]
     with open(f'{OUT}/manifest.txt', 'w') as f:
         for fn, w, h in manifest:
             f.write(f'{os.path.basename(fn)} {w} {h}\n')
